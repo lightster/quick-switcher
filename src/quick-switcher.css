@@ -1,0 +1,86 @@
+body.lstr-qswitcher-noscroll
+{
+  overflow: hidden;
+}
+
+.lstr-qswitcher-container
+{
+  background-color: #cccccc;
+  position: fixed;
+  top: 30px;
+  width: 100%;
+}
+
+.lstr-qswitcher-popup
+{
+  background-color: #999999;
+  width: 400px;
+  /*max-height: 500px;*/
+  min-height: 200px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.lstr-qswitcher-search
+{
+  width: 100%;
+}
+
+
+.lstr-qswitcher-help
+{
+  background-color: #eeeeee;
+  width: 400px;
+  max-height: 500px;
+  margin: 0 auto;
+  overflow: scroll;
+}
+
+.lstr-qswitcher-help ul:after
+{
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.lstr-qswitcher-help ul
+{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lstr-qswitcher-help li
+{
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  width: 25%;
+  font-size: 1em;
+  float: left;
+}
+
+
+.lstr-qswitcher-results
+{
+  background-color: #eeeeee;
+  width: 400px;
+  max-height: 500px;
+  margin: 0 auto;
+  overflow: scroll;
+}
+
+.lstr-qswitcher-results ul
+{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lstr-qswitcher-results li
+{
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-size: 4em;
+}
