@@ -8,24 +8,6 @@
     </style>
   </head>
   <body class="lstr-qswitcher-noscroll">
-    <div class="lstr-qswitcher-container">
-      <form class="lstr-qswitcher-popup">
-        <span class="lstr-qswitcher-help">
-          <ul>
-            <li>↵ to navigate</li>
-            <li>↵ to select</li>
-            <li>↵ to clear</li>
-            <li>↵ to dismiss</li>
-          </ul>
-        </span>
-        <span class="lstr-qswitcher-category">
-          People
-        </span>
-        <input type="text" class="lstr-qswitcher-search" />
-        <div class="lstr-qswitcher-results">
-        </div>
-      </form>
-    </div>
 
     <div style="text-align: center; margin-top: -450px; font-size: 2000px; width: 100%;">T</div>
 
@@ -44,7 +26,7 @@
           'nimble',
           'pariah'
         ];
-        $('.lstr-qswitcher-results').lstrQuickSwitcher('renderList', list);
+        module.exports.lstrQuickSwitcher(list);
       })();
     </script>
   </body>
