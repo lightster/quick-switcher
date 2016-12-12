@@ -23,16 +23,6 @@
         </span>
         <input type="text" class="lstr-qswitcher-search" />
         <div class="lstr-qswitcher-results">
-          <ul>
-            <li>lightster</li>
-            <li>zulu</li>
-            <li>enderwiggin</li>
-            <li>twenty7</li>
-            <li>netbattler</li>
-            <li>majorstriker</li>
-            <li>nimble</li>
-            <li>pariah</li>
-          </ul>
         </div>
       </form>
     </div>
@@ -42,5 +32,20 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.js"></script>
     <!--<script src="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.0.4/js/bootstrap.min.js" integrity="sha384-2sVosMIQw67h8RBCTmE20BSl9j66nWwbH+2W/CKr8celILSNnEfJnJv2PKCdet3I" crossorigin="anonymous"></script>-->
     <script type="text/javascript" src="../src/quick-switcher.js"></script>
+    <script type="text/javascript">
+      (function() {
+        var list = [
+          'lightster',
+          'zulu',
+          'enderwiggin',
+          'twenty7',
+          'netbattler',
+          'majorstriker',
+          'nimble',
+          'pariah'
+        ];
+        $('.lstr-qswitcher-results').lstrQuickSwitcher('renderList', list);
+      })();
+    </script>
   </body>
 </html>
