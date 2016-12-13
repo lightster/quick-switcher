@@ -83,6 +83,7 @@ body.lstr-qswitcher-noscroll
   padding: 0;
   width: 100%;
   font-size: 4em;
+  cursor: pointer;
 }
 
 li.lstr-qswitcher-result-selected

@@ -60,11 +60,17 @@ if (typeof module.exports.jQuery === 'undefined') {
       this.$domElement.on('keydown', '.lstr-qswitcher-search', function (event) {
         if (event.which === 38) { // up arrow key
           qSwitcher.selectIndex(qSwitcher.selectedIndex - 1);
+          qSwitcher.scrollToSelectedItem();
           event.preventDefault();
         } else if (event.which === 40) { // down arrow key
           qSwitcher.selectIndex(qSwitcher.selectedIndex + 1);
+          qSwitcher.scrollToSelectedItem();
           event.preventDefault();
         }
+      });
+      this.$domElement.on('hover', '.lstr-qswitcher-results li', function() {
+        var $li = $(this);
+        qSwitcher.selectIndex($li.data('lstr-qswitcher').index);
       });
 
       this.$domElement.find('.lstr-qswitcher-search').focus();
@@ -82,6 +88,7 @@ if (typeof module.exports.jQuery === 'undefined') {
         var $li = $('<li>');
         $ul.append($li);
         $li.text(value);
+        $li.data('lstr-qswitcher', {'index': index});
 
         qSwitcher.valueObjects[index] = {
           'index': index,
@@ -107,7 +114,9 @@ if (typeof module.exports.jQuery === 'undefined') {
       }
 
       this.valueObjects[this.selectedIndex].$li.addClass('lstr-qswitcher-result-selected');
+    },
 
+    scrollToSelectedItem: function() {
       var $li = this.valueObjects[this.selectedIndex].$li;
       var $results = this.$results;
 
