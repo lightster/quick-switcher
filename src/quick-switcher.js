@@ -1,15 +1,3 @@
-(function() {
-  $('.lstr-qswitcher-search').on('keydown', function () {
-    console.log('down')
-  })
-  $('.lstr-qswitcher-search').on('keyup', function () {
-    console.log('up')
-  })
-  $('.lstr-qswitcher-search').on('keypress', function () {
-    console.log('press')
-  })
-})();
-
 if (typeof module === 'undefined') {
   module = {};
 }
@@ -54,6 +42,16 @@ if (typeof module.exports.jQuery === 'undefined') {
       );
 
       $parentDom.append(this.$domElement);
+
+      this.$domElement.on('keydown', '.lstr-qswitcher-search', function (event) {
+        if (event.which === 38) { // up arrow key
+          console.log('up arrow');
+          event.preventDefault();
+        } else if (event.which === 40) { // down arrow key
+          console.log('down arrow');
+          event.preventDefault();
+        }
+      });
     },
 
     renderList: function() {
