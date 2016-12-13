@@ -16,21 +16,29 @@
     <script type="text/javascript" src="../src/quick-switcher.js"></script>
     <script type="text/javascript">
       (function() {
-        var list = [
-          'lightster',
-          'zulu',
-          'ollie',
-          'enderwiggin',
-          'twenty7',
-          'netbattler',
-          'majorstriker',
-          'nimble',
-          'darthsidious',
-          'pariah',
-          'blackstar',
-          'boni'
-        ];
-        module.exports.lstrQuickSwitcher(list);
+        module.exports.lstrQuickSwitcher(
+          function searchCallback(searchText) {
+            return [
+              'lightster',
+              'zulu',
+              'ollie',
+              'enderwiggin',
+              'twenty7',
+              'netbattler',
+              'majorstriker',
+              'nimble',
+              'darthsidious',
+              'pariah',
+              'blackstar',
+              'boni'
+            ].filter(function(item) {
+              return item.indexOf(searchText) !== -1
+            });
+          },
+          function selectCallback(selected) {
+            console.log(selected)
+          }
+        );
       })();
     </script>
   </body>

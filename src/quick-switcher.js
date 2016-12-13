@@ -17,13 +17,11 @@ if (typeof module.exports.jQuery === 'undefined') {
       this.valueObjects = null;
       this.selectedIndex = null;
       this.$results = null;
+      this.$search = null;
+      this.searchText = '';
 
       this.initDomElement($parentDom);
       this.options = options;
-
-      this.$liCollection = null;
-      this.valueObjects = null;
-      this.selectedIndex = null;
 
       this.renderList();
     },
@@ -54,10 +52,12 @@ if (typeof module.exports.jQuery === 'undefined') {
 
       $parentDom.append(this.$domElement);
 
-      this.$domElement.find('.lstr-qswitcher-search').focus();
+      this.$search = this.$domElement.find('.lstr-qswitcher-search');
       this.$results = this.$domElement.find('.lstr-qswitcher-results');
 
-      this.$domElement.on('keydown', '.lstr-qswitcher-search', function (event) {
+      this.$search.focus();
+
+      $('.lstr-qswitcher-noscroll').on('keydown', function (event) {
         if (event.which === 38) { // up arrow key
           qSwitcher.selectIndex(qSwitcher.selectedIndex - 1);
           qSwitcher.scrollToSelectedItem();
@@ -68,9 +68,32 @@ if (typeof module.exports.jQuery === 'undefined') {
           event.preventDefault();
         }
       });
+      this.$search.on('keydown', function (event) {
+        if (13 === event.keyCode) {
+          var $li = $(this);
+          qSwitcher.options.selectCallback(
+            qSwitcher.valueObjects[qSwitcher.selectedIndex].value
+          );
+
+          event.preventDefault();
+        }
+      });
+      this.$search.on('keyup', function (event) {
+        var searchText = qSwitcher.$search.val();
+        if (searchText !== qSwitcher.searchText) {
+          qSwitcher.searchText = searchText;
+          qSwitcher.renderList();
+        }
+      });
       this.$domElement.on('hover', '.lstr-qswitcher-results li', function() {
         var $li = $(this);
         qSwitcher.selectIndex($li.data('lstr-qswitcher').index);
+      });
+      this.$domElement.on('click', '.lstr-qswitcher-results li', function() {
+        var $li = $(this);
+        qSwitcher.options.selectCallback(
+          qSwitcher.valueObjects[$li.data('lstr-qswitcher').index].value
+        );
       });
 
       this.$domElement.find('.lstr-qswitcher-search').focus();
@@ -78,13 +101,20 @@ if (typeof module.exports.jQuery === 'undefined') {
 
     renderList: function() {
       var qSwitcher = this;
+      var $results = this.$results;
+
+      var items = this.options.searchCallback(this.searchText);
+
+      if (items.length == 0) {
+        $results.html('');
+        return;
+      }
 
       this.valueObjects = [];
 
-      var $results = this.$results;
       var $ul = $('<ul>');
 
-      this.options.forEach(function(value, index) {
+      items.forEach(function(value, index) {
         var $li = $('<li>');
         $ul.append($li);
         $li.text(value);
@@ -97,7 +127,7 @@ if (typeof module.exports.jQuery === 'undefined') {
         };
       });
 
-      $results.append($ul);
+      $results.html($ul);
 
       this.selectIndex(0);
     },
@@ -131,8 +161,13 @@ if (typeof module.exports.jQuery === 'undefined') {
     }
   };
 
-  exports.lstrQuickSwitcher = function(options) {
+  exports.lstrQuickSwitcher = function(searchCallback, selectCallback) {
     var $parentDom = $('body');
+
+    var options = {
+      'searchCallback': searchCallback,
+      'selectCallback': selectCallback
+    };
 
     quickSwitcher = Object.create(QuickSwitcher);
     quickSwitcher.init($parentDom, options);
