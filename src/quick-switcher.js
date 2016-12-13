@@ -13,6 +13,11 @@ if (typeof module.exports.jQuery === 'undefined') {
 (function(exports) {
   var QuickSwitcher = {
     init: function($parentDom, options) {
+      this.$liCollection = null;
+      this.valueObjects = null;
+      this.selectedIndex = null;
+      this.$results = null;
+
       this.initDomElement($parentDom);
       this.options = options;
 
@@ -49,6 +54,9 @@ if (typeof module.exports.jQuery === 'undefined') {
 
       $parentDom.append(this.$domElement);
 
+      this.$domElement.find('.lstr-qswitcher-search').focus();
+      this.$results = this.$domElement.find('.lstr-qswitcher-results');
+
       this.$domElement.on('keydown', '.lstr-qswitcher-search', function (event) {
         if (event.which === 38) { // up arrow key
           qSwitcher.selectIndex(qSwitcher.selectedIndex - 1);
@@ -67,7 +75,7 @@ if (typeof module.exports.jQuery === 'undefined') {
 
       this.valueObjects = [];
 
-      var $results = this.$domElement.find('.lstr-qswitcher-results');
+      var $results = this.$results;
       var $ul = $('<ul>');
 
       this.options.forEach(function(value, index) {
@@ -101,10 +109,15 @@ if (typeof module.exports.jQuery === 'undefined') {
       this.valueObjects[this.selectedIndex].$li.addClass('lstr-qswitcher-result-selected');
 
       var $li = this.valueObjects[this.selectedIndex].$li;
-      if ($li.offset().top + $li.outerHeight(true) - $li.parent().offset().top > $li.parents('.lstr-qswitcher-results').outerHeight(true) + $('.lstr-qswitcher-results').scrollTop()) {
-        $('.lstr-qswitcher-results').scrollTop($li.offset().top - $li.parent().offset().top);
-      } else if ($li.offset().top - $li.parent().offset().top < $('.lstr-qswitcher-results').scrollTop()) {
-        $('.lstr-qswitcher-results').scrollTop($li.offset().top - $li.parent().offset().top);
+      var $results = this.$results;
+
+      var topOfLi = $li.offset().top - $li.parent().offset().top;
+      var bottomOfLi = topOfLi + $li.outerHeight(true);
+      var scrollTop = $results.scrollTop();
+      var scrollBottom = scrollTop + $results.outerHeight(true);
+
+      if (bottomOfLi > scrollBottom || topOfLi < scrollTop) {
+        $results.scrollTop(topOfLi);
       }
     }
   };
