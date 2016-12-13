@@ -30,6 +30,7 @@ if (typeof module.exports.jQuery === 'undefined') {
       var qSwitcher = this;
 
       this.$domElement = $(
+        '<div class="lstr-qswitcher-overlay">' +
         '<div class="lstr-qswitcher-container">' +
         '  <form class="lstr-qswitcher-popup">' +
         '    <span class="lstr-qswitcher-help">' +
@@ -47,6 +48,7 @@ if (typeof module.exports.jQuery === 'undefined') {
         '    <div class="lstr-qswitcher-results">' +
         '    </div>' +
         '  </form>' +
+        '</div>' +
         '</div>'
       );
 
