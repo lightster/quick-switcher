@@ -65,7 +65,7 @@ body.lstr-qswitcher-noscroll
 {
   background-color: #eeeeee;
   width: 400px;
-  max-height: 500px;
+  max-height: 300px;
   margin: 0 auto;
   overflow: scroll;
 }
@@ -83,4 +83,10 @@ body.lstr-qswitcher-noscroll
   padding: 0;
   width: 100%;
   font-size: 4em;
+}
+
+li.lstr-qswitcher-result-selected
+{
+  background-color: #000000;
+  color: #ffffff;
 }
