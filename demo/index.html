@@ -19,9 +19,9 @@
         module.exports.lstrQuickSwitcher(
           function searchCallback(searchText) {
             return [
-              'lightster',
+              {'text': 'lightster'},
               'zulu',
-              'ollie',
+              {'html': '<span style="color: blue; ">ollie</span>'},
               'enderwiggin',
               'twenty7',
               'netbattler',
@@ -32,7 +32,13 @@
               'blackstar',
               'boni'
             ].filter(function(item) {
-              return item.indexOf(searchText) !== -1
+              var text = item;
+              if (item.text) {
+                text = item.text;
+              } else if (item.html) {
+                text = item.html;
+              }
+              return text.indexOf(searchText) !== -1
             });
           },
           function selectCallback(selected) {

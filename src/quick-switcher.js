@@ -128,7 +128,7 @@ if (typeof module.exports.jQuery === 'undefined') {
       items.forEach(function(value, index) {
         var $li = $('<li>');
         $ul.append($li);
-        $li.text(value);
+        qSwitcher.setListText($li, value);
         $li.data('lstr-qswitcher', {'index': index});
 
         qSwitcher.valueObjects[index] = {
@@ -141,6 +141,20 @@ if (typeof module.exports.jQuery === 'undefined') {
       $results.html($ul);
 
       this.selectIndex(0);
+    },
+
+    setListText: function($li, value) {
+      if (value.toHtml || value.html) {
+        $li.html(value.toHtml ? value.toHtml() : value.html);
+        return;
+      }
+
+      if (value.toText || value.text) {
+        $li.text(value.toText ? value.toText() : value.text);
+        return;
+      }
+
+      $li.text(value);
     },
 
     selectIndex: function(selectedIndex) {
