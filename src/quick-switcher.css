@@ -3,8 +3,14 @@ body.lstr-qswitcher-noscroll
   overflow: hidden;
 }
 
+
+body.lstr-qswitcher-noscroll .lstr-qswitcher-overlay {
+  display: block;
+}
+
 .lstr-qswitcher-overlay
 {
+  display: none;
   background-color: rgba(204, 204, 204, 0.6);
   position: fixed;
   top: 0;

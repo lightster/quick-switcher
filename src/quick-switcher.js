@@ -13,6 +13,7 @@ if (typeof module.exports.jQuery === 'undefined') {
 (function(exports) {
   var QuickSwitcher = {
     init: function($parentDom, options) {
+      this.$parentDom = null;
       this.$liCollection = null;
       this.valueObjects = null;
       this.selectedIndex = null;
@@ -29,6 +30,7 @@ if (typeof module.exports.jQuery === 'undefined') {
     initDomElement: function($parentDom) {
       var qSwitcher = this;
 
+      this.$parentDom = $parentDom;
       this.$domElement = $(
         '<div class="lstr-qswitcher-overlay">' +
         '<div class="lstr-qswitcher-container">' +
@@ -59,7 +61,20 @@ if (typeof module.exports.jQuery === 'undefined') {
 
       this.$search.focus();
 
-      $('.lstr-qswitcher-noscroll').on('keydown', function (event) {
+      this.$domElement.find('.lstr-qswitcher-popup').on('submit', function (event) {
+        event.preventDefault();
+      });
+      this.$parentDom.find('.lstr-qswitcher-overlay').on('click', function (event) {
+        qSwitcher.closeSwitcher();
+        event.preventDefault();
+      });
+      this.$parentDom.on('keydown', function (event) {
+        if ((event.metaKey || event.ctrlKey) && event.which === 75) {
+          qSwitcher.toggleSwitcher();
+          event.preventDefault();
+        }
+      });
+      $('html').on('keydown', '.lstr-qswitcher-noscroll', function (event) {
         if (event.which === 38) { // up arrow key
           qSwitcher.selectIndex(qSwitcher.selectedIndex - 1);
           qSwitcher.scrollToSelectedItem();
@@ -68,14 +83,12 @@ if (typeof module.exports.jQuery === 'undefined') {
           qSwitcher.selectIndex(qSwitcher.selectedIndex + 1);
           qSwitcher.scrollToSelectedItem();
           event.preventDefault();
-        }
-      });
-      this.$search.on('keydown', function (event) {
-        if (13 === event.keyCode) {
+        } else if (event.which === 27) { // escape key
+          qSwitcher.toggleSwitcher();
+          event.preventDefault();
+        } else if (13 === event.keyCode) {
           var $li = $(this);
-          qSwitcher.options.selectCallback(
-            qSwitcher.valueObjects[qSwitcher.selectedIndex].value
-          );
+          qSwitcher.triggerSelect(qSwitcher.selectedIndex);
 
           event.preventDefault();
         }
@@ -93,9 +106,7 @@ if (typeof module.exports.jQuery === 'undefined') {
       });
       this.$domElement.on('click', '.lstr-qswitcher-results li', function() {
         var $li = $(this);
-        qSwitcher.options.selectCallback(
-          qSwitcher.valueObjects[$li.data('lstr-qswitcher').index].value
-        );
+        qSwitcher.triggerSelect($li.data('lstr-qswitcher').index);
       });
 
       this.$domElement.find('.lstr-qswitcher-search').focus();
@@ -159,6 +170,20 @@ if (typeof module.exports.jQuery === 'undefined') {
 
       if (bottomOfLi > scrollBottom || topOfLi < scrollTop) {
         $results.scrollTop(topOfLi);
+      }
+    },
+
+    toggleSwitcher: function() {
+      this.$parentDom.toggleClass('lstr-qswitcher-noscroll');
+    },
+
+    closeSwitcher: function() {
+      this.$parentDom.removeClass('lstr-qswitcher-noscroll');
+    },
+
+    triggerSelect: function(index) {
+      if (false !== this.options.selectCallback(this.valueObjects[index].value)) {
+        this.closeSwitcher();
       }
     }
   };
