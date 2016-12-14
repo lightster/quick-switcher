@@ -59,8 +59,6 @@ if (typeof module.exports.jQuery === 'undefined') {
       this.$search = this.$domElement.find('.lstr-qswitcher-search');
       this.$results = this.$domElement.find('.lstr-qswitcher-results');
 
-      this.$search.focus();
-
       this.$domElement.find('.lstr-qswitcher-popup').on('submit', function (event) {
         event.preventDefault();
       });
@@ -175,6 +173,7 @@ if (typeof module.exports.jQuery === 'undefined') {
 
     toggleSwitcher: function() {
       this.$parentDom.toggleClass('lstr-qswitcher-noscroll');
+      this.$search.focus();
     },
 
     closeSwitcher: function() {
