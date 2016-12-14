@@ -47,7 +47,6 @@ input.lstr-qswitcher-search
   height: auto;
 }
 
-
 .lstr-qswitcher-help
 {
   background-color: #eeeeee;
@@ -77,6 +76,29 @@ input.lstr-qswitcher-search
   width: 25%;
   font-size: 1em;
   float: left;
+}
+
+
+.lstr-qswitcher-breadcrumb ul
+{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lstr-qswitcher-breadcrumb li
+{
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+
+.lstr-qswitcher-breadcrumb li+li:before
+{
+  content: ">";
+  display: block;
+  float: left;
+  margin: 0 5px;
 }
 
 
