@@ -33,6 +33,7 @@ if (typeof module.exports.jQuery === 'undefined') {
       this.$parentDom = $parentDom;
       this.$domElement = $(
         '<div class="lstr-qswitcher-overlay">' +
+        '</div>' +
         '<div class="lstr-qswitcher-container">' +
         '  <form class="lstr-qswitcher-popup">' +
         '    <span class="lstr-qswitcher-help">' +
@@ -50,7 +51,6 @@ if (typeof module.exports.jQuery === 'undefined') {
         '    <div class="lstr-qswitcher-results">' +
         '    </div>' +
         '  </form>' +
-        '</div>' +
         '</div>'
       );
 
@@ -144,7 +144,7 @@ if (typeof module.exports.jQuery === 'undefined') {
     },
 
     selectIndex: function(selectedIndex) {
-      if (this.selectedIndex !== null) {
+      if (this.selectedIndex !== null && this.valueObjects[this.selectedIndex].$li) {
         this.valueObjects[this.selectedIndex].$li.removeClass('lstr-qswitcher-result-selected');
       }
 

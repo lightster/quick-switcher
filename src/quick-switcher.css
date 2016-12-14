@@ -4,7 +4,8 @@ body.lstr-qswitcher-noscroll
 }
 
 
-body.lstr-qswitcher-noscroll .lstr-qswitcher-overlay {
+body.lstr-qswitcher-noscroll .lstr-qswitcher-overlay,
+body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
   display: block;
 }
 
@@ -21,17 +22,18 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-overlay {
 
 .lstr-qswitcher-container
 {
+  display: none;
   position: fixed;
   top: 20%;
-  width: 100%;
+  width: 400px;
+  margin: 0 0 0 50%;
+  left: -200px;
 }
 
 .lstr-qswitcher-popup
 {
   position: relative;
   background-color: #999999;
-  width: 400px;
-  margin: 0 auto;
 }
 
 input.lstr-qswitcher-search
