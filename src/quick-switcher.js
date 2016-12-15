@@ -11,6 +11,45 @@ if (typeof module.exports.jQuery === 'undefined') {
 }
 
 (function (exports) {
+  var ResultHandler = {
+    filters: {
+      isFuzzyMatch: function(needle, haystack) {
+        for (var i = 0, j = 0; i < needle.length && j < haystack.length; i++) {
+          while (j < haystack.length) {
+            j++;
+            if (needle.charAt(i) === haystack.charAt(j)) {
+              break;
+            }
+          }
+        }
+
+        return j < haystack.length;
+      },
+
+      areWordsFound: function(needle, haystack) {
+        var pieces = needle.split(/[^\w]/);
+        for (var i = 0; i < pieces.length; i++) {
+          if (haystack.indexOf(pieces[i]) === -1) {
+            return false;
+          }
+        }
+
+        return true;
+      },
+
+      isMatch: function(needle, haystack) {
+        if (haystack.indexOf(needle) !== -1) {
+          return true;
+        } else if (this.areWordsFound(needle, haystack)) {
+          return true;
+        }
+
+        return false;
+        //return this.isFuzzyMatch(needle, haystack);
+      }
+    }
+  };
+
   var QuickSwitcher = {
     init: function ($parentDom, searchCallback, selectCallback) {
       this.$parentDom = null;
@@ -112,48 +151,53 @@ if (typeof module.exports.jQuery === 'undefined') {
     },
 
     renderList: function () {
+      this.renderBreadcrumb();
+
+      this.$results.html('');
+
+      var resultHandler = Object.create(ResultHandler);
+      resultHandler.setResults = this.setResults.bind(this);
+
+      this.searchCallback(this.searchText, resultHandler);
+    },
+
+    setResults: function (items) {
       var qSwitcher = this;
       var $results = this.$results;
 
-      this.renderBreadcrumb();
+      if (items.length == 0) {
+        $results.html('');
+        return;
+      }
 
-      $results.html('');
+      qSwitcher.valueObjects = [];
 
-      this.searchCallback(this.searchText, function setResults(items) {
-        if (items.length == 0) {
-          $results.html('');
-          return;
+      var $ul = $('<ul>');
+
+      items.forEach(function (value, index) {
+        var $li = $('<li>');
+        var $container = $('<div>');
+        $ul.append($li);
+        $li.append($container);
+        qSwitcher.setListText($container, value);
+
+        $li.data('lstr-qswitcher', {'index': index});
+        $container.addClass('lstr-qswitcher-result-container');
+
+        if (value.searchCallback) {
+          $li.addClass('lstr-qswitcher-result-category');
         }
 
-        qSwitcher.valueObjects = [];
-
-        var $ul = $('<ul>');
-
-        items.forEach(function (value, index) {
-          var $li = $('<li>');
-          var $container = $('<div>');
-          $ul.append($li);
-          $li.append($container);
-          qSwitcher.setListText($container, value);
-
-          $li.data('lstr-qswitcher', {'index': index});
-          $container.addClass('lstr-qswitcher-result-container');
-
-          if (value.searchCallback) {
-            $li.addClass('lstr-qswitcher-result-category');
-          }
-
-          qSwitcher.valueObjects[index] = {
-            'index': index,
-            'value': value,
-            '$li': $li
-          };
-        });
-
-        $results.html($ul);
-
-        qSwitcher.selectIndex(0);
+        qSwitcher.valueObjects[index] = {
+          'index': index,
+          'value': value,
+          '$li': $li
+        };
       });
+
+      $results.html($ul);
+
+      qSwitcher.selectIndex(0);
     },
 
     renderBreadcrumb: function ()

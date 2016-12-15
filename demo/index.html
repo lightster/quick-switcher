@@ -17,13 +17,13 @@
     <script type="text/javascript">
       (function() {
         module.exports.lstrQuickSwitcher(
-          function searchCallback(searchText, setBasicResults) {
-            setBasicResults([
+          function searchCallback(searchText, basicResultHandler) {
+            basicResultHandler.setResults([
               {
                 'breadcrumbText': 'Peoplez',
                 'text': 'people',
-                'searchCallback': function searchCallback(searchText, setPeopleResults) {
-                  setPeopleResults([
+                'searchCallback': function searchCallback(searchText, peopleResultHandler) {
+                  peopleResultHandler.setResults([
                     'lightster',
                     'zulu',
                     'ollie',
@@ -43,7 +43,7 @@
                     } else if (item.html) {
                       text = item.html;
                     }
-                    return text.indexOf(searchText) !== -1
+                    return peopleResultHandler.filters.isMatch(searchText, text);
                   }));
                 },
                 'selectCallback': function selectCallback(selected) {
@@ -51,7 +51,7 @@
                 }
               }
             ].filter(function(item) {
-              return item.text.indexOf(searchText) !== -1
+              return basicResultHandler.filters.isMatch(searchText, item.text);
             }));
           },
           function selectCallback(selected) {
