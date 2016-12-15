@@ -26,8 +26,6 @@ if (typeof module.exports.jQuery === 'undefined') {
       this.searchCallback = searchCallback;
       this.selectCallback = selectCallback;
       this.callbackStack = [];
-
-      this.renderList();
     },
 
     initDomElement: function ($parentDom) {
@@ -39,15 +37,15 @@ if (typeof module.exports.jQuery === 'undefined') {
         '</div>' +
         '<div class="lstr-qswitcher-container">' +
         '  <form class="lstr-qswitcher-popup">' +
-        '    <span class="lstr-qswitcher-help">' +
-        '      <ul>' +
-        '        <li>↵ to navigate</li>' +
-        '        <li>↵ to select</li>' +
-        '        <li>↵ to clear</li>' +
-        '        <li>↵ to dismiss</li>' +
-        '      </ul>' +
-        '    </span>' +
         '    <div class="lstr-qswitcher-breadcrumb">' +
+        '    </div>' +
+        '    <div class="lstr-qswitcher-help">' +
+        '      <ul>' +
+        '        <li><em>&#8597;</em> to navigate</li>' +
+        '        <li><em>&#8629;</em> to select</li>' +
+        '        <li><em>&#9003;</em> to clear</li>' +
+        '        <li><em>esc</em> to dismiss</li>' +
+        '      </ul>' +
         '    </div>' +
         '    <input type="text" class="lstr-qswitcher-search" />' +
         '    <div class="lstr-qswitcher-results">' +
@@ -89,7 +87,7 @@ if (typeof module.exports.jQuery === 'undefined') {
           event.preventDefault();
         } else if (13 === event.keyCode) {
           var $li = $(this);
-          qSwitcher.triggerSelect(qSwitcher.selectedIndex);
+          qSwitcher.triggerSelect(qSwitcher.selectedIndex, event);
           event.preventDefault();
         }
       });
@@ -107,12 +105,10 @@ if (typeof module.exports.jQuery === 'undefined') {
         var $li = $(this);
         qSwitcher.selectIndex($li.data('lstr-qswitcher').index);
       });
-      this.$domElement.on('click', '.lstr-qswitcher-results li', function () {
+      this.$domElement.on('click', '.lstr-qswitcher-results li', function (event) {
         var $li = $(this);
-        qSwitcher.triggerSelect($li.data('lstr-qswitcher').index);
+        qSwitcher.triggerSelect($li.data('lstr-qswitcher').index, event);
       });
-
-      this.$domElement.find('.lstr-qswitcher-search').focus();
     },
 
     renderList: function () {
@@ -121,33 +117,43 @@ if (typeof module.exports.jQuery === 'undefined') {
 
       this.renderBreadcrumb();
 
-      var items = this.searchCallback(this.searchText);
+      $results.html('');
 
-      if (items.length == 0) {
-        $results.html('');
-        return;
-      }
+      this.searchCallback(this.searchText, function setResults(items) {
+        if (items.length == 0) {
+          $results.html('');
+          return;
+        }
 
-      this.valueObjects = [];
+        qSwitcher.valueObjects = [];
 
-      var $ul = $('<ul>');
+        var $ul = $('<ul>');
 
-      items.forEach(function (value, index) {
-        var $li = $('<li>');
-        $ul.append($li);
-        qSwitcher.setListText($li, value);
-        $li.data('lstr-qswitcher', {'index': index});
+        items.forEach(function (value, index) {
+          var $li = $('<li>');
+          var $container = $('<div>');
+          $ul.append($li);
+          $li.append($container);
+          qSwitcher.setListText($container, value);
 
-        qSwitcher.valueObjects[index] = {
-          'index': index,
-          'value': value,
-          '$li': $li
-        };
+          $li.data('lstr-qswitcher', {'index': index});
+          $container.addClass('lstr-qswitcher-result-container');
+
+          if (value.searchCallback) {
+            $li.addClass('lstr-qswitcher-result-category');
+          }
+
+          qSwitcher.valueObjects[index] = {
+            'index': index,
+            'value': value,
+            '$li': $li
+          };
+        });
+
+        $results.html($ul);
+
+        qSwitcher.selectIndex(0);
       });
-
-      $results.html($ul);
-
-      this.selectIndex(0);
     },
 
     renderBreadcrumb: function ()
@@ -163,18 +169,18 @@ if (typeof module.exports.jQuery === 'undefined') {
       this.$breadcrumb.html($ul);
     },
 
-    setListText: function ($li, value) {
+    setListText: function ($element, value) {
       if (value.toHtml || value.html) {
-        $li.html(value.toHtml ? value.toHtml() : value.html);
+        $element.html(value.toHtml ? value.toHtml() : value.html);
         return;
       }
 
       if (value.toText || value.text) {
-        $li.text(value.toText ? value.toText() : value.text);
+        $element.text(value.toText ? value.toText() : value.text);
         return;
       }
 
-      $li.text(value);
+      $element.text(value);
     },
 
     selectIndex: function (selectedIndex) {
@@ -218,7 +224,7 @@ if (typeof module.exports.jQuery === 'undefined') {
       this.$parentDom.removeClass('lstr-qswitcher-noscroll');
     },
 
-    triggerSelect: function (index) {
+    triggerSelect: function (index, event) {
       var selectedValue = this.valueObjects[index].value;
 
       if (selectedValue.searchCallback) {
@@ -239,7 +245,7 @@ if (typeof module.exports.jQuery === 'undefined') {
         return;
       }
 
-      if (false !== this.selectCallback(selectedValue)) {
+      if (false !== this.selectCallback(selectedValue, event)) {
         this.closeSwitcher();
       }
     },

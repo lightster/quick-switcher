@@ -6,6 +6,7 @@ body.lstr-qswitcher-noscroll
 
 body.lstr-qswitcher-noscroll .lstr-qswitcher-overlay,
 body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
+  z-index: 9999;
   display: block;
 }
 
@@ -25,33 +26,34 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
   display: none;
   position: fixed;
   top: 20%;
-  width: 400px;
-  margin: 0 0 0 50%;
-  left: -200px;
+  width: 500px;
+  margin: 0 0 0 -250px;
+  left: 50%;
 }
 
 .lstr-qswitcher-popup
 {
   position: relative;
-  background-color: #999999;
+  background-color: #ffffff;
+  border-radius: 5px;
+  border: #ffffff 1px solid;
 }
 
 input.lstr-qswitcher-search
 {
-  width: 100%;
-  border: 0;
-  padding: 0;
-  margin: 0;
-  font-size: 4em;
+  width: 466px;
+  border-color: #666666;
+  padding: 7px;
+  margin: 5px 10px 10px 10px;
+  font-size: 3em;
   line-height: 1.2em;
   height: auto;
 }
 
 .lstr-qswitcher-help
 {
-  background-color: #eeeeee;
-  width: 400px;
-  margin: 0 auto;
+  width: 500px;
+  margin: 10px 0 0 0;
 }
 
 .lstr-qswitcher-help ul:after
@@ -64,18 +66,24 @@ input.lstr-qswitcher-search
 .lstr-qswitcher-help ul
 {
   list-style-type: none;
-  margin: 0;
+  margin: 0 0 0 5px;
   padding: 0;
+  font-size: .9em;
+  float: right;
 }
 
 .lstr-qswitcher-help li
 {
-  margin: 0;
+  margin: 0 10px 5px 5px;
   padding: 0;
-  text-align: center;
-  width: 25%;
-  font-size: 1em;
   float: left;
+}
+
+.lstr-qswitcher-help em
+{
+  font-style: normal;
+  font-weight: bold;
+  margin: 0 3px 0 0;
 }
 
 
@@ -84,12 +92,15 @@ input.lstr-qswitcher-search
   list-style-type: none;
   margin: 0;
   padding: 0;
+  font-size: .9em;
+  color: #999;
+  float: left;
 }
 
 .lstr-qswitcher-breadcrumb li
 {
   float: left;
-  margin: 0;
+  margin: 10px 10px 5px 10px;
   padding: 0;
 }
 
@@ -104,9 +115,8 @@ input.lstr-qswitcher-search
 
 .lstr-qswitcher-results
 {
-  background-color: #eeeeee;
-  width: 400px;
-  margin: 0 auto;
+  width: 480px;
+  margin: 0 10px 10px 10px;
   max-height: 320px;
   overflow-x: hidden;
   overflow-y: auto;
@@ -115,22 +125,35 @@ input.lstr-qswitcher-search
 .lstr-qswitcher-results ul
 {
   list-style-type: none;
-  margin: 0;
+  margin: 0 25px 0 0;
   padding: 0;
 }
 
 .lstr-qswitcher-results li
 {
-  margin: 0;
-  padding: 0;
+  padding: 7px 9px 7px 9px;
   width: 100%;
-  font-size: 4em;
-  line-height: 1.5em;
+  font-size: 1.2em;
+  line-height: 1em;
   cursor: pointer;
+}
+
+.lstr-qswitcher-results a
+{
+  display: block;
+  width: 100%;
 }
 
 li.lstr-qswitcher-result-selected
 {
-  background-color: #000000;
+  background-color: #3274ce;
   color: #ffffff;
+  border-radius: 3px;
+}
+
+.lstr-qswitcher-results li .lstr-qswitcher-results-subtext {
+  font-size: .8em;
+  margin-left: 10px;
+  float: right;
+  color: #999;
 }
