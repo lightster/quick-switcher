@@ -45,7 +45,7 @@ input.lstr-qswitcher-search
   border-color: #666666;
   padding: 7px;
   margin: 5px 10px 10px 10px;
-  font-size: 3em;
+  font-size: 2.5em;
   line-height: 1.2em;
   height: auto;
 }
@@ -133,7 +133,7 @@ input.lstr-qswitcher-search
 {
   padding: 7px 9px 7px 9px;
   width: 100%;
-  font-size: 1.2em;
+  font-size: 1em;
   line-height: 1em;
   cursor: pointer;
 }
@@ -152,7 +152,7 @@ li.lstr-qswitcher-result-selected
 }
 
 .lstr-qswitcher-results li .lstr-qswitcher-results-subtext {
-  font-size: .8em;
+  font-size: .9em;
   margin-left: 10px;
   float: right;
   color: #999;
