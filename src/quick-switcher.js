@@ -181,6 +181,10 @@ if (typeof module.exports.jQuery === 'undefined') {
         $li.append($container);
         qSwitcher.setListText($container, value);
 
+        if (value.subtext) {
+          $li.prepend('<span class="lstr-qswitcher-results-subtext">' + value.subtext + '</span>');
+        }
+
         $li.data('lstr-qswitcher', {'index': index});
         $container.addClass('lstr-qswitcher-result-container');
 
