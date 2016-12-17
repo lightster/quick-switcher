@@ -51,7 +51,7 @@ if (typeof module.exports.jQuery === 'undefined') {
   };
 
   var QuickSwitcher = {
-    init: function ($parentDom, searchCallback, selectCallback) {
+    init: function ($parentDom, searchCallback, selectCallback, options) {
       this.$parentDom = null;
       this.$liCollection = null;
       this.valueObjects = null;
@@ -60,9 +60,14 @@ if (typeof module.exports.jQuery === 'undefined') {
       this.$breadcrumb = null;
       this.$search = null;
       this.searchText = '';
+      this.searchDelayTimeout = null;
+      this.searchId = 0;
+
+      this.options = $.extend({'searchDelay': 1000}, options);
 
       this.initDomElement($parentDom);
       this.searchCallback = searchCallback;
+      this.searchDelay = this.options.searchDelay;
       this.selectCallback = selectCallback;
       this.callbackStack = [];
     },
@@ -132,9 +137,17 @@ if (typeof module.exports.jQuery === 'undefined') {
       });
       this.$search.on('keyup', function (event) {
         var searchText = qSwitcher.$search.val();
+
+        if (qSwitcher.searchDelayTimeout) {
+          clearTimeout(qSwitcher.searchDelayTimeout);
+          qSwitcher.searchDelayTimeout = null;
+        }
+
         if (searchText !== qSwitcher.searchText) {
           qSwitcher.searchText = searchText;
-          qSwitcher.renderList();
+          qSwitcher.searchDelayTimeout = setTimeout(function () {
+            qSwitcher.renderList();
+          }, qSwitcher.searchDelay);
         } else if (event.which === 8 && '' === searchText) { // backspace with text box blank
           qSwitcher.popCallback();
           qSwitcher.renderList();
@@ -156,12 +169,18 @@ if (typeof module.exports.jQuery === 'undefined') {
       this.$results.html('');
 
       var resultHandler = Object.create(ResultHandler);
-      resultHandler.setResults = this.setResults.bind(this);
+      resultHandler.setResults = this.setResults.bind(this, ++this.searchId);
 
       this.searchCallback(this.searchText, resultHandler);
     },
 
-    setResults: function (items) {
+    setResults: function (searchId, items) {
+      // if the search ID provided to setResults is not the current searchId,
+      // ignore the results
+      if (searchId !== this.searchId) {
+        return;
+      }
+
       var qSwitcher = this;
       var $results = this.$results;
 
@@ -279,10 +298,14 @@ if (typeof module.exports.jQuery === 'undefined') {
         this.callbackStack.push({
           'text': selectedValue.breadcrumbText,
           'parentSearchCallback': this.searchCallback,
+          'parentSearchDelay': this.parentSearchDelay,
           'parentSelectCallback': this.selectCallback
         });
 
         this.searchCallback = selectedValue.searchCallback;
+        if (selectedValue.searchDelay) {
+          this.searchDelay = selectedValue.searchDelay;
+        }
         if (selectedValue.selectCallback) {
           this.selectCallback = selectedValue.selectCallback;
         }
@@ -305,6 +328,7 @@ if (typeof module.exports.jQuery === 'undefined') {
       }
 
       this.searchCallback = callbacks.parentSearchCallback;
+      this.searchDelay = callbacks.parentSearchDelay;
       this.selectCallback = callbacks.parentSelectCallback;
 
       return true;
@@ -317,10 +341,10 @@ if (typeof module.exports.jQuery === 'undefined') {
     }
   };
 
-  exports.lstrQuickSwitcher = function (searchCallback, selectCallback) {
+  exports.lstrQuickSwitcher = function (searchCallback, selectCallback, options) {
     var $parentDom = $('body');
 
     quickSwitcher = Object.create(QuickSwitcher);
-    quickSwitcher.init($parentDom, searchCallback, selectCallback);
+    quickSwitcher.init($parentDom, searchCallback, selectCallback, options);
   };
 }(module.exports));

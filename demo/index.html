@@ -46,6 +46,7 @@
                     return peopleResultHandler.filters.isMatch(searchText, text);
                   }));
                 },
+                'searchDelay': 0,
                 'selectCallback': function selectCallback(selected) {
                   console.log(selected)
                 }
@@ -56,6 +57,9 @@
           },
           function selectCallback(selected) {
             console.log(selected);
+          },
+          {
+            'searchDelay': 0
           }
         );
       })();
