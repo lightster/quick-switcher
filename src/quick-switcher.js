@@ -67,6 +67,7 @@ if (typeof module.exports.jQuery === 'undefined') {
 
       this.initDomElement($parentDom);
       this.searchCallback = searchCallback;
+      this.abortSearchCallback = null;
       this.searchDelay = this.options.searchDelay;
       this.selectCallback = selectCallback;
       this.callbackStack = [];
@@ -164,6 +165,11 @@ if (typeof module.exports.jQuery === 'undefined') {
     },
 
     renderList: function () {
+      if (this.abortSearchCallback) {
+        this.abortSearchCallback();
+        this.abortSearchCallback = null;
+      }
+
       this.renderBreadcrumb();
 
       this.$results.html('');
@@ -171,7 +177,7 @@ if (typeof module.exports.jQuery === 'undefined') {
       var resultHandler = Object.create(ResultHandler);
       resultHandler.setResults = this.setResults.bind(this, ++this.searchId);
 
-      this.searchCallback(this.searchText, resultHandler);
+      this.abortSearchCallback = this.searchCallback(this.searchText, resultHandler);
     },
 
     setResults: function (searchId, items) {
