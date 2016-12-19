@@ -57,6 +57,7 @@ if (typeof module.exports.jQuery === 'undefined') {
       this.valueObjects = null;
       this.selectedIndex = null;
       this.$results = null;
+      this.$loading = null;
       this.$breadcrumb = null;
       this.$search = null;
       this.searchText = '';
@@ -93,8 +94,8 @@ if (typeof module.exports.jQuery === 'undefined') {
         '      </ul>' +
         '    </div>' +
         '    <input type="text" class="lstr-qswitcher-search" />' +
-        '    <div class="lstr-qswitcher-results">' +
-        '    </div>' +
+        '    <div class="lstr-qswitcher-loading">Loading...</div>' +
+        '    <div class="lstr-qswitcher-results"></div>' +
         '  </form>' +
         '</div>'
       );
@@ -103,6 +104,7 @@ if (typeof module.exports.jQuery === 'undefined') {
 
       this.$breadcrumb = this.$domElement.find('.lstr-qswitcher-breadcrumb');
       this.$search = this.$domElement.find('.lstr-qswitcher-search');
+      this.$loading = this.$domElement.find('.lstr-qswitcher-loading');
       this.$results = this.$domElement.find('.lstr-qswitcher-results');
 
       this.$domElement.find('.lstr-qswitcher-popup').on('submit', function (event) {
@@ -145,8 +147,8 @@ if (typeof module.exports.jQuery === 'undefined') {
         }
 
         if (searchText !== qSwitcher.searchText) {
-          qSwitcher.searchText = searchText;
           qSwitcher.searchDelayTimeout = setTimeout(function () {
+            qSwitcher.searchText = searchText;
             qSwitcher.renderList();
           }, qSwitcher.searchDelay);
         } else if (event.which === 8 && '' === searchText) { // backspace with text box blank
@@ -172,11 +174,11 @@ if (typeof module.exports.jQuery === 'undefined') {
 
       this.renderBreadcrumb();
 
-      this.$results.html('');
+      this.$results.hide();
+      this.$loading.show();
 
       var resultHandler = Object.create(ResultHandler);
       resultHandler.setResults = this.setResults.bind(this, ++this.searchId);
-
       this.abortSearchCallback = this.searchCallback(this.searchText, resultHandler);
     },
 
@@ -192,6 +194,8 @@ if (typeof module.exports.jQuery === 'undefined') {
 
       if (items.length == 0) {
         $results.html('');
+        this.$loading.hide();
+        $results.show();
         return;
       }
 
@@ -225,6 +229,8 @@ if (typeof module.exports.jQuery === 'undefined') {
       });
 
       $results.html($ul);
+      this.$loading.hide();
+      $results.show();
 
       qSwitcher.selectIndex(0);
     },
