@@ -57,6 +57,7 @@ if (typeof module.exports.jQuery === 'undefined') {
       this.valueObjects = null;
       this.selectedIndex = null;
       this.$results = null;
+      this.$noResults = null;
       this.$loading = null;
       this.$breadcrumb = null;
       this.$search = null;
@@ -95,6 +96,7 @@ if (typeof module.exports.jQuery === 'undefined') {
         '    </div>' +
         '    <input type="text" class="lstr-qswitcher-search" />' +
         '    <div class="lstr-qswitcher-loading">Loading...</div>' +
+        '    <div class="lstr-qswitcher-no-results">No results found</div>' +
         '    <div class="lstr-qswitcher-results"></div>' +
         '  </form>' +
         '</div>'
@@ -106,6 +108,7 @@ if (typeof module.exports.jQuery === 'undefined') {
       this.$search = this.$domElement.find('.lstr-qswitcher-search');
       this.$loading = this.$domElement.find('.lstr-qswitcher-loading');
       this.$results = this.$domElement.find('.lstr-qswitcher-results');
+      this.$noResults = this.$domElement.find('.lstr-qswitcher-no-results');
 
       this.$domElement.find('.lstr-qswitcher-popup').on('submit', function (event) {
         event.preventDefault();
@@ -175,6 +178,7 @@ if (typeof module.exports.jQuery === 'undefined') {
       this.renderBreadcrumb();
 
       this.$results.hide();
+      this.$noResults.hide();
       this.$loading.show();
 
       var resultHandler = Object.create(ResultHandler);
@@ -195,7 +199,8 @@ if (typeof module.exports.jQuery === 'undefined') {
       if (items.length == 0) {
         $results.html('');
         this.$loading.hide();
-        $results.show();
+        $results.hide();
+        this.$noResults.show();
         return;
       }
 
@@ -230,6 +235,7 @@ if (typeof module.exports.jQuery === 'undefined') {
 
       $results.html($ul);
       this.$loading.hide();
+      this.$noResults.hide();
       $results.show();
 
       qSwitcher.selectIndex(0);
