@@ -362,7 +362,7 @@ if (typeof module.exports.jQuery === 'undefined') {
   exports.lstrQuickSwitcher = function (searchCallback, selectCallback, options) {
     var $parentDom = $('body');
 
-    quickSwitcher = Object.create(QuickSwitcher);
+    var quickSwitcher = Object.create(QuickSwitcher);
     quickSwitcher.init($parentDom, searchCallback, selectCallback, options);
   };
 }(module.exports));
