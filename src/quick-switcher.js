@@ -57,6 +57,7 @@ if (typeof module.exports.jQuery === 'undefined') {
       this.valueObjects = null;
       this.selectedIndex = null;
       this.$results = null;
+      this.$noSearchTerms = null;
       this.$noResults = null;
       this.$loading = null;
       this.$breadcrumb = null;
@@ -96,6 +97,7 @@ if (typeof module.exports.jQuery === 'undefined') {
         '    </div>' +
         '    <input type="text" class="lstr-qswitcher-search" />' +
         '    <div class="lstr-qswitcher-loading">Loading...</div>' +
+        '    <div class="lstr-qswitcher-no-terms"></div>' +
         '    <div class="lstr-qswitcher-no-results">No results found</div>' +
         '    <div class="lstr-qswitcher-results"></div>' +
         '  </form>' +
@@ -108,6 +110,7 @@ if (typeof module.exports.jQuery === 'undefined') {
       this.$search = this.$domElement.find('.lstr-qswitcher-search');
       this.$loading = this.$domElement.find('.lstr-qswitcher-loading');
       this.$results = this.$domElement.find('.lstr-qswitcher-results');
+      this.$noSearchTerms = this.$domElement.find('.lstr-qswitcher-no-terms');
       this.$noResults = this.$domElement.find('.lstr-qswitcher-no-results');
 
       this.$domElement.find('.lstr-qswitcher-popup').on('submit', function (event) {
@@ -178,6 +181,7 @@ if (typeof module.exports.jQuery === 'undefined') {
       this.renderBreadcrumb();
 
       this.$results.hide();
+      this.$noSearchTerms.hide();
       this.$noResults.hide();
       this.$loading.show();
 
@@ -199,8 +203,14 @@ if (typeof module.exports.jQuery === 'undefined') {
       if (items.length == 0) {
         $results.html('');
         this.$loading.hide();
+        this.$noSearchTerms.hide();
         $results.hide();
-        this.$noResults.show();
+        this.$noResults.hide();
+        if (this.searchText) {
+          this.$noResults.show();
+          return;
+        }
+        this.$noSearchTerms.show();
         return;
       }
 
@@ -235,6 +245,7 @@ if (typeof module.exports.jQuery === 'undefined') {
 
       $results.html($ul);
       this.$loading.hide();
+      this.$noSearchTerms.hide();
       this.$noResults.hide();
       $results.show();
 
