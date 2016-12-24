@@ -1,16 +1,4 @@
-if (typeof module === 'undefined') {
-  module = {};
-}
-
-if (typeof module.exports === 'undefined') {
-  module.exports = {};
-}
-
-if (typeof module.exports.jQuery === 'undefined') {
-  module.exports.jQuery = jQuery;
-}
-
-(function (exports) {
+(function (exports, $) {
   var ResultHandler = {
     filters: {
       isFuzzyMatch: function(needle, haystack) {
@@ -376,4 +364,4 @@ if (typeof module.exports.jQuery === 'undefined') {
     var quickSwitcher = Object.create(QuickSwitcher);
     quickSwitcher.init($parentDom, searchCallback, selectCallback, options);
   };
-}(module.exports));
+}(window, jQuery));

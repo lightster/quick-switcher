@@ -1,5 +1,5 @@
 (function() {
-  module.exports.lstrQuickSwitcher(
+  lstrQuickSwitcher(
     function searchCallback(searchText, basicResultHandler) {
       basicResultHandler.setResults([
         {
