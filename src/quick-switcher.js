@@ -168,10 +168,7 @@
 
       this.renderBreadcrumb();
 
-      this.$results.hide();
-      this.$noSearchTerms.hide();
-      this.$noResults.hide();
-      this.$loading.show();
+      this.usePane(this.$loading);
 
       var resultHandler = Object.create(ResultHandler);
       resultHandler.setResults = this.setResults.bind(this, ++this.searchId);
@@ -186,19 +183,10 @@
       }
 
       var qSwitcher = this;
-      var $results = this.$results;
 
       if (items.length == 0) {
-        $results.html('');
-        this.$loading.hide();
-        this.$noSearchTerms.hide();
-        $results.hide();
-        this.$noResults.hide();
-        if (this.searchText) {
-          this.$noResults.show();
-          return;
-        }
-        this.$noSearchTerms.show();
+        this.$results.html('');
+        this.usePane(this.searchText ? this.$noResults : this.$noSearchTerms);
         return;
       }
 
@@ -231,11 +219,8 @@
         };
       });
 
-      $results.html($ul);
-      this.$loading.hide();
-      this.$noSearchTerms.hide();
-      this.$noResults.hide();
-      $results.show();
+      this.$results.html($ul);
+      this.usePane(this.$results);
 
       qSwitcher.selectIndex(0);
     },
@@ -355,6 +340,15 @@
       while (this.callbackStack.length > 0) {
         this.popCallback();
       }
+    },
+
+    usePane: function ($paneToUse) {
+      this.$results.hide();
+      this.$noSearchTerms.hide();
+      this.$noResults.hide();
+      this.$loading.hide();
+
+      $paneToUse.show();
     }
   };
 
