@@ -142,6 +142,7 @@
 
         if (searchText !== qSwitcher.searchText) {
           qSwitcher.searchDelayTimeout = setTimeout(function () {
+            qSwitcher.selectIndex(null);
             qSwitcher.searchText = searchText;
             qSwitcher.renderList();
           }, qSwitcher.searchDelay);
@@ -184,13 +185,13 @@
 
       var qSwitcher = this;
 
+      qSwitcher.valueObjects = [];
+
       if (items.length == 0) {
         this.$results.html('');
         this.usePane(this.searchText ? this.$noResults : this.$noSearchTerms);
         return;
       }
-
-      qSwitcher.valueObjects = [];
 
       var $ul = $('<ul>');
 
@@ -257,6 +258,11 @@
         this.valueObjects[this.selectedIndex].$li.removeClass('lstr-qswitcher-result-selected');
       }
 
+      if (null === selectedIndex) {
+        this.selectedIndex = null;
+        return;
+      }
+
       this.selectedIndex = selectedIndex % this.valueObjects.length;
 
       if (this.selectedIndex < 0) {
@@ -294,6 +300,10 @@
     },
 
     triggerSelect: function (index, event) {
+      if (null === index) {
+        return;
+      }
+
       var selectedValue = this.valueObjects[index].value;
 
       if (selectedValue.searchCallback) {
@@ -312,8 +322,10 @@
           this.selectCallback = selectedValue.selectCallback;
         }
 
-        this.renderList();
+        this.valueObjects = [];
+        this.selectIndex(null);
         this.$search.val('');
+        this.renderList();
 
         return;
       }
