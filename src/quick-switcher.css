@@ -29,6 +29,7 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
   width: 500px;
   margin: 0 0 0 -250px;
   left: 50%;
+  font-size: .9em;
 }
 
 .lstr-qswitcher-popup
