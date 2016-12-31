@@ -32,6 +32,11 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
   font-size: .9em;
 }
 
+.lstr-qswitcher-container *
+{
+  box-sizing: border-box;
+}
+
 .lstr-qswitcher-popup
 {
   position: relative;
@@ -42,7 +47,7 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
 
 input.lstr-qswitcher-search
 {
-  width: 466px;
+  width: 480px;
   border-color: #666666;
   padding: 7px;
   margin: 5px 10px 10px 10px;
@@ -138,7 +143,7 @@ input.lstr-qswitcher-search
 .lstr-qswitcher-results ul
 {
   list-style-type: none;
-  margin: 0 25px 0 0;
+  margin: 0;
   padding: 0;
 }
 
