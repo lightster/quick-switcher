@@ -83,7 +83,7 @@
         '        <li><em>esc</em> to dismiss</li>' +
         '      </ul>' +
         '    </div>' +
-        '    <input type="text" class="lstr-qswitcher-search" />' +
+        '    <input type="text" class="lstr-qswitcher-search form-control" />' +
         '    <div class="lstr-qswitcher-loading">Loading...</div>' +
         '    <div class="lstr-qswitcher-no-terms"></div>' +
         '    <div class="lstr-qswitcher-no-results">No results found</div>' +
