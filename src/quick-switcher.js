@@ -87,6 +87,7 @@
         '    <div class="lstr-qswitcher-loading">Loading...</div>' +
         '    <div class="lstr-qswitcher-no-terms"></div>' +
         '    <div class="lstr-qswitcher-no-results">No results found</div>' +
+        '    <div class="lstr-qswitcher-oops-results">Oops! Something went wrong while trying to load your results.</div>' +
         '    <div class="lstr-qswitcher-results"></div>' +
         '  </form>' +
         '</div>'
@@ -100,6 +101,7 @@
       this.$results = this.$domElement.find('.lstr-qswitcher-results');
       this.$noSearchTerms = this.$domElement.find('.lstr-qswitcher-no-terms');
       this.$noResults = this.$domElement.find('.lstr-qswitcher-no-results');
+      this.$oopsResults = this.$domElement.find('.lstr-qswitcher-oops-results');
 
       this.$domElement.find('.lstr-qswitcher-popup').on('submit', function (event) {
         event.preventDefault();
@@ -172,7 +174,9 @@
       this.usePane(this.$loading);
 
       var resultHandler = Object.create(ResultHandler);
-      resultHandler.setResults = this.setResults.bind(this, ++this.searchId);
+      ++this.searchId;
+      resultHandler.setResults = this.setResults.bind(this, this.searchId);
+      resultHandler.setError = this.setError.bind(this, this.searchId);
       this.abortSearchCallback = this.searchCallback(this.searchText, resultHandler);
     },
 
@@ -224,6 +228,14 @@
       this.usePane(this.$results);
 
       qSwitcher.selectIndex(0);
+    },
+
+    setError: function (searchId) {
+      if (searchId !== this.searchId) {
+        return;
+      }
+
+      this.usePane(this.$oopsResults);
     },
 
     renderBreadcrumb: function ()
@@ -358,6 +370,7 @@
       this.$results.hide();
       this.$noSearchTerms.hide();
       this.$noResults.hide();
+      this.$oopsResults.hide();
       this.$loading.hide();
 
       $paneToUse.show();

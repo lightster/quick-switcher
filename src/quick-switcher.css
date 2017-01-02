@@ -126,7 +126,10 @@ input.lstr-qswitcher-search
 }
 
 
-.lstr-qswitcher-results, .lstr-qswitcher-no-terms, .lstr-qswitcher-no-results
+.lstr-qswitcher-results,
+.lstr-qswitcher-no-terms,
+.lstr-qswitcher-no-results,
+.lstr-qswitcher-oops-results
 {
   width: 480px;
   margin: 0 10px 10px 10px;

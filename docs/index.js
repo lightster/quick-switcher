@@ -35,6 +35,13 @@
           'selectCallback': function selectCallback(selected) {
             console.log(selected)
           }
+        },
+        {
+          'breadcrumbText': 'Demo Error',
+          'text': 'Demo Error',
+          'searchCallback': function searchCallback(searchText, errorResultHandler) {
+            errorResultHandler.setError();
+          }
         }
       ].filter(function(item) {
         return basicResultHandler.filters.isMatch(searchText, item.text);
