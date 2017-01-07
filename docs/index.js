@@ -5,6 +5,7 @@
         {
           'breadcrumbText': 'Peoplez',
           'text': 'people',
+          'description': {'html': '&#128269;'},
           'searchCallback': function searchCallback(searchText, peopleResultHandler) {
             setTimeout(function () {
               peopleResultHandler.setResults([
