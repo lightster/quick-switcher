@@ -206,8 +206,10 @@
         $li.append($container);
         qSwitcher.setListText($container, value);
 
-        if (value.subtext) {
-          $li.prepend('<span class="lstr-qswitcher-results-subtext">' + value.subtext + '</span>');
+        if (value.description) {
+          var $description = $('<span class="lstr-qswitcher-results-description"></span>');
+          qSwitcher.setListText($description, value.description);
+          $li.prepend($description);
         }
 
         $li.data('lstr-qswitcher', {'index': index});
