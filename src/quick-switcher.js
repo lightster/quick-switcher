@@ -1,4 +1,7 @@
-(function (exports, $) {
+define(['require'], function (require) {
+  var $ = jQuery;
+  var exports = window;
+
   var ResultHandler = {
     filters: {
       isFuzzyMatch: function(needle, haystack) {
@@ -379,10 +382,16 @@
     }
   };
 
-  exports.lstrQuickSwitcher = function (searchCallback, selectCallback, options) {
+  lstrQuickSwitcher = function (searchCallback, selectCallback, options) {
     var $parentDom = $('body');
 
     var quickSwitcher = Object.create(QuickSwitcher);
     quickSwitcher.init($parentDom, searchCallback, selectCallback, options);
   };
-}(window, jQuery));
+
+  if (typeof initLstrQuickSwitcher === 'function') {
+    initLstrQuickSwitcher(lstrQuickSwitcher);
+  }
+
+  return lstrQuickSwitcher;
+});
