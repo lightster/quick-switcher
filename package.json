@@ -1,9 +1,10 @@
 {
   "name": "quick-switcher",
   "version": "0.2.0",
+  "scripts": {
+    "build": "r.js -o build.js"
+  },
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-rename": "^1.2.2",
-    "gulp-uglify": "^2.0.0"
+    "requirejs": "^2.3.2"
   }
 }
