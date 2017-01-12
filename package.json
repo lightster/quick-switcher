@@ -5,6 +5,7 @@
     "build": "r.js -o build.js"
   },
   "devDependencies": {
+    "almond": "^0.3.3",
     "requirejs": "^2.3.2"
   }
 }
