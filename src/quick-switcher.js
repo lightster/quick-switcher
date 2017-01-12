@@ -1,4 +1,4 @@
-define(['require'], function (require) {
+define('quick-switcher', ['require'], function (require) {
   var $ = jQuery;
   var exports = window;
 
@@ -388,10 +388,6 @@ define(['require'], function (require) {
     var quickSwitcher = Object.create(QuickSwitcher);
     quickSwitcher.init($parentDom, searchCallback, selectCallback, options);
   };
-
-  if (typeof initLstrQuickSwitcher === 'function') {
-    initLstrQuickSwitcher(lstrQuickSwitcher);
-  }
 
   return lstrQuickSwitcher;
 });

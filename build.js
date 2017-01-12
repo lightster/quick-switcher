@@ -1,12 +1,11 @@
-({
-  baseUrl: "src/",
-  name: "quick-switcher",
-  insertRequire: [
-    "quick-switcher"
-  ],
-  include: [
-    "../node_modules/requirejs/require"
-  ],
+{
+  baseUrl: ".",
+  name: "src/quick-switcher",
+  name: 'node_modules/almond/almond',
+  include: ['src/quick-switcher'],
   out: "dist/quick-switcher.min.js",
-  wrap: true
-})
+  wrap: {
+    startFile: '.almond/start.frag',
+    endFile: '.almond/end.frag'
+  }
+}

@@ -1,5 +1,5 @@
-var initLstrQuickSwitcher = function(lstrQuickSwitcher) {
-  lstrQuickSwitcher(
+(function (root) {
+  root.lstrQuickSwitcher(
     function searchCallback(searchText, basicResultHandler) {
       basicResultHandler.setResults([
         {
@@ -55,4 +55,4 @@ var initLstrQuickSwitcher = function(lstrQuickSwitcher) {
       'searchDelay': 0
     }
   );
-};
+})(window);
