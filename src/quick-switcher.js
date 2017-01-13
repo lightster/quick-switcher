@@ -275,7 +275,7 @@ define('quick-switcher', ['require'], function (require) {
         this.valueObjects[this.selectedIndex].$li.removeClass('lstr-qswitcher-result-selected');
       }
 
-      if (null === selectedIndex) {
+      if (null === selectedIndex || 0 === this.valueObjects.length) {
         this.selectedIndex = null;
         return;
       }
@@ -290,6 +290,10 @@ define('quick-switcher', ['require'], function (require) {
     },
 
     scrollToSelectedItem: function () {
+      if (null === this.selectedIndex) {
+        return;
+      }
+
       var $li = this.valueObjects[this.selectedIndex].$li;
       var $results = this.$results;
 
