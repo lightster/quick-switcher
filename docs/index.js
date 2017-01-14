@@ -1,5 +1,11 @@
-(function (root) {
-  root.lstrQuickSwitcher(
+require.config({
+  paths: {
+    'quick-switcher': '../src/quick-switcher'
+  }
+});
+
+define(['quick-switcher'], function(lstrQuickSwitcher) {
+  lstrQuickSwitcher(
     function searchCallback(searchText, basicResultHandler) {
       basicResultHandler.setResults([
         {
@@ -55,4 +61,4 @@
       'searchDelay': 0
     }
   );
-})(window);
+});
