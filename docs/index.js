@@ -40,7 +40,20 @@ define(['quick-switcher'], function(lstrQuickSwitcher) {
           },
           'searchDelay': 500,
           'selectCallback': function selectCallback(selected) {
-            console.log(selected)
+            console.log(selected);
+            if (window.localStorage) {
+              var counters = {};
+              if (localStorage.getItem('counters')) {
+                counters = JSON.parse(localStorage.getItem('counters'));
+              }
+
+              if (!counters[selected]) {
+                counters[selected] = 0;
+              }
+              ++counters[selected];
+
+              localStorage.setItem('counters', JSON.stringify(counters));
+            }
           }
         },
         {
