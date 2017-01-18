@@ -1,7 +1,5 @@
 require.config({
-  paths: {
-    'quick-switcher': '../src/quick-switcher'
-  }
+  baseUrl: 'src'
 });
 
 define(['quick-switcher'], function(lstrQuickSwitcher) {
