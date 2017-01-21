@@ -1,9 +1,10 @@
-define('quick-switcher', ['filters'], function (filters) {
+define('quick-switcher', ['filters', 'selectors', 'sorters'], function (filters, selectors, sorters) {
   var $ = jQuery;
   var exports = window;
 
   var ResultHandler = {
-    filters: filters
+    filters: filters,
+    sorters: sorters
   };
 
   var QuickSwitcher = {
@@ -316,7 +317,7 @@ define('quick-switcher', ['filters'], function (filters) {
         return;
       }
 
-      if (false !== this.selectCallback(selectedValue, event)) {
+      if (false !== this.selectCallback(selectedValue, event, selectors)) {
         this.closeSwitcher();
       }
     },
