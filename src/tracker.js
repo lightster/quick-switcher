@@ -29,10 +29,10 @@ define('tracker', [], function () {
       }
 
       this.selections[trackerId].timestamps.push(Math.floor(new Date().getTime() / 1000));
+      ++this.selections[trackerId].count;
 
       while (this.selections[trackerId].timestamps.length > 10) {
         this.selections[trackerId].timestamps.shift();
-        ++this.selections[trackerId].count;
       }
 
       this.save();
