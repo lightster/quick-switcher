@@ -12,7 +12,7 @@ define(['quick-switcher'], function(lstrQuickSwitcher) {
           'description': {'html': '&#128269;'},
           'searchCallback': function searchCallback(searchText, peopleResultHandler) {
             setTimeout(function () {
-              peopleResultHandler.setResults([
+              peopleResultHandler.setResults(peopleResultHandler.sorters.tracker('people').sort([
                 'lightster',
                 'zulu',
                 'ollie',
@@ -33,25 +33,18 @@ define(['quick-switcher'], function(lstrQuickSwitcher) {
                   text = item.html;
                 }
                 return peopleResultHandler.filters.isMatch(searchText, text);
-              }));
-            }, 1000);
+              }).map(function (item) {
+                return {
+                  'text': item,
+                  'trackerId': item
+                };
+              })));
+            }, 1);
           },
           'searchDelay': 500,
-          'selectCallback': function selectCallback(selected) {
+          'selectCallback': function selectCallback(selected, event, selectors) {
             console.log(selected);
-            if (window.localStorage) {
-              var counters = {};
-              if (localStorage.getItem('counters')) {
-                counters = JSON.parse(localStorage.getItem('counters'));
-              }
-
-              if (!counters[selected]) {
-                counters[selected] = 0;
-              }
-              ++counters[selected];
-
-              localStorage.setItem('counters', JSON.stringify(counters));
-            }
+            selectors.tracker('people').trackSelection(selected);
           }
         },
         {
