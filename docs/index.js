@@ -5,10 +5,11 @@ require.config({
 define(['quick-switcher'], function(lstrQuickSwitcher) {
   lstrQuickSwitcher(
     function searchCallback(searchText, basicResultHandler) {
-      basicResultHandler.setResults([
+      basicResultHandler.setResults(basicResultHandler.sorters.tracker('main').sort([
         {
           'breadcrumbText': 'Peoplez',
           'text': 'people',
+          'trackerId': 'People',
           'description': {'html': '&#128269;'},
           'searchCallback': function searchCallback(searchText, peopleResultHandler) {
             setTimeout(function () {
@@ -50,19 +51,24 @@ define(['quick-switcher'], function(lstrQuickSwitcher) {
         {
           'breadcrumbText': 'Demo Error',
           'text': 'Demo Error',
+          'trackerId': 'Demo Error',
           'searchCallback': function searchCallback(searchText, errorResultHandler) {
             errorResultHandler.setError();
           }
         }
       ].filter(function(item) {
         return basicResultHandler.filters.isMatch(searchText, item.text);
-      }));
+      })));
     },
-    function selectCallback(selected) {
+    function selectCallback(selected, event, selectors) {
+      selectors.tracker('main').trackSelection(selected);
       console.log(selected);
     },
     {
-      'searchDelay': 0
+      'searchDelay': 0,
+      'selectChildSearchCallback': function selectChildSearchCallback(selected, event, selectors) {
+        selectors.tracker('main').trackSelection(selected);
+      },
     }
   );
 });
