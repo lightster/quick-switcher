@@ -227,13 +227,13 @@ define('quick-switcher', ['filters', 'selectors', 'sorters'], function (filters,
     },
 
     setListText: function ($element, value) {
-      if (value.toHtml || value.html) {
-        $element.html(value.toHtml ? value.toHtml() : value.html);
+      if (value.html) {
+        $element.html((typeof value.html === 'function') ? value.html() : value.html);
         return;
       }
 
-      if (value.toText || value.text) {
-        $element.text(value.toText ? value.toText() : value.text);
+      if (value.text) {
+        $element.text((typeof value.text === 'function') ? value.text() : value.text);
         return;
       }
 
