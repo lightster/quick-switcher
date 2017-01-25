@@ -280,6 +280,7 @@ define('quick-switcher', ['filters', 'selectors', 'sorters'], function (filters,
     toggleSwitcher: function () {
       this.useRootCallback();
       this.$search.val('');
+      this.searchText = '';
       this.renderList();
 
       this.$parentDom.toggleClass('lstr-qswitcher-noscroll');
@@ -323,6 +324,7 @@ define('quick-switcher', ['filters', 'selectors', 'sorters'], function (filters,
         this.valueObjects = [];
         this.selectIndex(null);
         this.$search.val('');
+        this.searchText = '';
         this.renderList();
 
         return;
