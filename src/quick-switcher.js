@@ -8,7 +8,7 @@ define('quick-switcher', ['filters', 'selectors', 'sorters'], function (filters,
   };
 
   var QuickSwitcher = {
-    init: function ($parentDom, searchCallback, selectCallback, options) {
+    init: function ($parentDom, options) {
       this.$parentDom = null;
       this.$liCollection = null;
       this.valueObjects = null;
@@ -23,18 +23,17 @@ define('quick-switcher', ['filters', 'selectors', 'sorters'], function (filters,
       this.searchDelayTimeout = null;
       this.searchId = 0;
 
-      this.options = $.extend({
+      this.setOptions($.extend({
+        'searchCallback': function() {},
+        'selectCallback': function() {},
+        'selectChildSearchCallback': function() {},
         'searchDelay': 1000,
-        'selectChildSearchCallback': null
-      }, options);
+      }, options));
 
       this.initDomElement($parentDom);
-      this.searchCallback = searchCallback;
-      this.abortSearchCallback = null;
-      this.searchDelay = this.options.searchDelay;
-      this.selectCallback = selectCallback;
-      this.selectChildSearchCallback = this.options.selectChildSearchCallback;
+
       this.callbackStack = [];
+      this.abortSearchCallback = null;
     },
 
     initDomElement: function ($parentDom) {
@@ -299,26 +298,25 @@ define('quick-switcher', ['filters', 'selectors', 'sorters'], function (filters,
       var selectedValue = this.valueObjects[index].value;
 
       if (selectedValue.searchCallback) {
-        if (this.selectChildSearchCallback
-          && false === this.selectChildSearchCallback(selectedValue, event, selectors)
-        ) {
+        if (false === this.selectChildSearchCallback(selectedValue, event, selectors)) {
           return;
         }
 
         this.callbackStack.push({
           'text': selectedValue.breadcrumbText,
-          'parentSearchCallback': this.searchCallback,
-          'parentSearchDelay': this.parentSearchDelay,
-          'parentSelectCallback': this.selectCallback,
-          'parentSelectChildSearchCallback': this.selectChildSearchCallback
+          'parent': this.options,
         });
 
+        this.options = selectedValue;
         this.searchCallback = selectedValue.searchCallback;
         if (selectedValue.searchDelay) {
           this.searchDelay = selectedValue.searchDelay;
         }
         if (selectedValue.selectCallback) {
           this.selectCallback = selectedValue.selectCallback;
+        }
+        if (selectedValue.selectChildSearchCallback) {
+          this.selectChildSearchCallback = selectedValue.selectChildSearchCallback;
         }
 
         this.valueObjects = [];
@@ -341,10 +339,7 @@ define('quick-switcher', ['filters', 'selectors', 'sorters'], function (filters,
         return false;
       }
 
-      this.searchCallback = callbacks.parentSearchCallback;
-      this.searchDelay = callbacks.parentSearchDelay;
-      this.selectCallback = callbacks.parentSelectCallback;
-      this.selectChildSearchCallback = callbacks.parentSelectChildSearchCallback;
+      this.setOptions(callbacks.parent);
 
       return true;
     },
@@ -363,14 +358,23 @@ define('quick-switcher', ['filters', 'selectors', 'sorters'], function (filters,
       this.$loading.hide();
 
       $paneToUse.show();
+    },
+
+    setOptions: function(options) {
+      this.options = options;
+
+      this.searchCallback = options.searchCallback;
+      this.searchDelay = options.searchDelay;
+      this.selectCallback = options.selectCallback;
+      this.selectChildSearchCallback = options.selectChildSearchCallback;
     }
   };
 
-  lstrQuickSwitcher = function (searchCallback, selectCallback, options) {
+  lstrQuickSwitcher = function (options) {
     var $parentDom = $('body');
 
     var quickSwitcher = Object.create(QuickSwitcher);
-    quickSwitcher.init($parentDom, searchCallback, selectCallback, options);
+    quickSwitcher.init($parentDom, options);
   };
 
   return lstrQuickSwitcher;
