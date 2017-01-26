@@ -3,8 +3,8 @@ require.config({
 });
 
 define(['quick-switcher'], function(lstrQuickSwitcher) {
-  lstrQuickSwitcher(
-    function searchCallback(searchText, basicResultHandler) {
+  lstrQuickSwitcher({
+    'searchCallback': function(searchText, basicResultHandler) {
       basicResultHandler.setResults(basicResultHandler.sorters.tracker('main').sort([
         {
           'breadcrumbText': 'Peoplez',
@@ -55,20 +55,22 @@ define(['quick-switcher'], function(lstrQuickSwitcher) {
           'searchCallback': function searchCallback(searchText, errorResultHandler) {
             errorResultHandler.setError();
           }
+        },
+        {
+          'text': 'Quickest Item',
+          'trackerId': 'Quickest Item'
         }
       ].filter(function(item) {
         return basicResultHandler.filters.isMatch(searchText, item.text);
       })));
     },
-    function selectCallback(selected, event, selectors) {
+    'selectCallback': function(selected, event, selectors) {
       selectors.tracker('main').trackSelection(selected);
       console.log(selected);
     },
-    {
-      'searchDelay': 0,
-      'selectChildSearchCallback': function selectChildSearchCallback(selected, event, selectors) {
-        selectors.tracker('main').trackSelection(selected);
-      },
-    }
-  );
+    'selectChildSearchCallback': function(selected, event, selectors) {
+      selectors.tracker('main').trackSelection(selected);
+    },
+    'searchDelay': 0,
+  });
 });
