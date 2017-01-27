@@ -23,12 +23,27 @@ define('quick-switcher', ['filters', 'selectors', 'sorters'], function (filters,
       this.searchDelayTimeout = null;
       this.searchId = 0;
 
-      this.setOptions($.extend({
-        'searchCallback': function() {},
-        'selectCallback': function() {},
-        'selectChildSearchCallback': function() {},
-        'searchDelay': 1000,
-      }, options));
+      this.modifierKey = 'ctrlKey';
+      if (navigator.platform.toLowerCase().indexOf('mac') != -1) {
+        this.modifierKey = 'metaKey';
+      }
+
+      options = $.extend({
+        searchCallback: function() {},
+        selectCallback: function() {},
+        selectChildSearchCallback: function() {},
+        searchDelay: 1000,
+        hotKey: 'K',
+      }, options);
+
+      this.hotKey = options.hotKey.toUpperCase();
+
+      this.setOptions({
+        searchCallback: options.searchCallback,
+        selectCallback: options.selectCallback,
+        selectChildSearchCallback: options.selectChildSearchCallback,
+        searchDelay: options.searchDelay,
+      });
 
       this.initDomElement($parentDom);
 
@@ -83,7 +98,7 @@ define('quick-switcher', ['filters', 'selectors', 'sorters'], function (filters,
         event.preventDefault();
       });
       this.$parentDom.on('keydown', function (event) {
-        if ((event.metaKey || event.ctrlKey) && event.which === 75) {
+        if (event[qSwitcher.modifierKey] && String.fromCharCode(event.which) === qSwitcher.hotKey) {
           qSwitcher.toggleSwitcher();
           event.preventDefault();
         }
