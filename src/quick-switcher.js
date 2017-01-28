@@ -1,4 +1,4 @@
-define('quick-switcher', ['filters', 'selectors', 'sorters'], function (filters, selectors, sorters) {
+define('quick-switcher', ['filters', 'selected-result', 'sorters'], function (filters, SelectedResult, sorters) {
   var $ = jQuery;
   var exports = window;
 
@@ -311,9 +311,11 @@ define('quick-switcher', ['filters', 'selectors', 'sorters'], function (filters,
       }
 
       var selectedValue = this.valueObjects[index].value;
+      var selectedResult = Object.create(SelectedResult);
+      selectedResult.init(selectedValue, this.searchText, event);
 
       if (selectedValue.searchCallback) {
-        if (false === this.selectChildSearchCallback(selectedValue, event, selectors)) {
+        if (false === this.selectChildSearchCallback(selectedResult)) {
           return;
         }
 
@@ -343,7 +345,7 @@ define('quick-switcher', ['filters', 'selectors', 'sorters'], function (filters,
         return;
       }
 
-      if (false !== this.selectCallback(selectedValue, event, selectors)) {
+      if (false !== this.selectCallback(selectedResult)) {
         this.closeSwitcher();
       }
     },
