@@ -13,7 +13,7 @@ define(['quick-switcher'], function(lstrQuickSwitcher) {
           'description': {'html': '&#128269;'},
           'searchCallback': function searchCallback(searchText, peopleResultHandler) {
             setTimeout(function () {
-              peopleResultHandler.setResults(peopleResultHandler.sorters.tracker('people').sort([
+              peopleResultHandler.setResults(peopleResultHandler.sorters.tracker('person').sort([
                 'lightster',
                 'zulu',
                 'ollie',
@@ -43,9 +43,9 @@ define(['quick-switcher'], function(lstrQuickSwitcher) {
             }, 1);
           },
           'searchDelay': 500,
-          'selectCallback': function selectCallback(selected, event, selectors) {
-            console.log(selected);
-            selectors.tracker('people').trackSelection(selected);
+          'selectCallback': function selectCallback(selected) {
+            console.log(selected.selectedValue);
+            selected.trackAs('person');
           }
         },
         {
@@ -64,12 +64,12 @@ define(['quick-switcher'], function(lstrQuickSwitcher) {
         return basicResultHandler.filters.isMatch(searchText, item.text);
       })));
     },
-    'selectCallback': function(selected, event, selectors) {
-      selectors.tracker('main').trackSelection(selected);
-      console.log(selected);
+    'selectCallback': function(selected) {
+      selected.trackAs('main');
+      console.log(selected.selectedValue);
     },
-    'selectChildSearchCallback': function(selected, event, selectors) {
-      selectors.tracker('main').trackSelection(selected);
+    'selectChildSearchCallback': function(selected) {
+      selected.trackAs('main');
     },
     'searchDelay': 0,
   });
