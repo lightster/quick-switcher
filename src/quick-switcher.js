@@ -1,14 +1,14 @@
-define('quick-switcher', ['filters', 'selected-result', 'sorters'], function (filters, SelectedResult, sorters) {
+define('quick-switcher', ['filters', 'selected-result', 'sorters'], function(filters, SelectedResult, sorters) {
   var $ = jQuery;
   var exports = window;
 
   var ResultHandler = {
     filters: filters,
-    sorters: sorters
+    sorters: sorters,
   };
 
   var QuickSwitcher = {
-    init: function ($parentDom, options) {
+    init: function($parentDom, options) {
       this.$parentDom = null;
       this.$liCollection = null;
       this.valueObjects = null;
@@ -51,7 +51,7 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function (fi
       this.abortSearchCallback = null;
     },
 
-    initDomElement: function ($parentDom) {
+    initDomElement: function($parentDom) {
       var qSwitcher = this;
 
       this.$parentDom = $parentDom;
@@ -90,20 +90,20 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function (fi
       this.$noResults = this.$domElement.find('.lstr-qswitcher-no-results');
       this.$oopsResults = this.$domElement.find('.lstr-qswitcher-oops-results');
 
-      this.$domElement.find('.lstr-qswitcher-popup').on('submit', function (event) {
+      this.$domElement.find('.lstr-qswitcher-popup').on('submit', function(event) {
         event.preventDefault();
       });
-      this.$parentDom.find('.lstr-qswitcher-overlay').on('click', function (event) {
+      this.$parentDom.find('.lstr-qswitcher-overlay').on('click', function(event) {
         qSwitcher.closeSwitcher();
         event.preventDefault();
       });
-      this.$parentDom.on('keydown', function (event) {
+      this.$parentDom.on('keydown', function(event) {
         if (event[qSwitcher.modifierKey] && String.fromCharCode(event.which) === qSwitcher.hotKey) {
           qSwitcher.toggleSwitcher();
           event.preventDefault();
         }
       });
-      $('html').on('keydown', '.lstr-qswitcher-noscroll', function (event) {
+      $('html').on('keydown', '.lstr-qswitcher-noscroll', function(event) {
         if (event.which === 38) { // up arrow key
           qSwitcher.selectIndex(qSwitcher.selectedIndex - 1);
           qSwitcher.scrollToSelectedItem();
@@ -121,7 +121,7 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function (fi
           event.preventDefault();
         }
       });
-      this.$search.on('keyup', function (event) {
+      this.$search.on('keyup', function(event) {
         var searchText = qSwitcher.$search.val();
 
         if (qSwitcher.searchDelayTimeout) {
@@ -130,7 +130,7 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function (fi
         }
 
         if (searchText !== qSwitcher.searchText) {
-          qSwitcher.searchDelayTimeout = setTimeout(function () {
+          qSwitcher.searchDelayTimeout = setTimeout(function() {
             qSwitcher.selectIndex(null);
             qSwitcher.searchText = searchText;
             qSwitcher.renderList();
@@ -140,17 +140,17 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function (fi
           qSwitcher.renderList();
         }
       });
-      this.$domElement.on('hover', '.lstr-qswitcher-results li', function () {
+      this.$domElement.on('hover', '.lstr-qswitcher-results li', function() {
         var $li = $(this);
         qSwitcher.selectIndex($li.data('lstr-qswitcher').index);
       });
-      this.$domElement.on('click', '.lstr-qswitcher-results li', function (event) {
+      this.$domElement.on('click', '.lstr-qswitcher-results li', function(event) {
         var $li = $(this);
         qSwitcher.triggerSelect($li.data('lstr-qswitcher').index, event);
       });
     },
 
-    renderList: function () {
+    renderList: function() {
       if (this.abortSearchCallback) {
         this.abortSearchCallback();
         this.abortSearchCallback = null;
@@ -167,7 +167,7 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function (fi
       this.abortSearchCallback = this.searchCallback(this.searchText, resultHandler);
     },
 
-    setResults: function (searchId, items) {
+    setResults: function(searchId, items) {
       // if the search ID provided to setResults is not the current searchId,
       // ignore the results
       if (searchId !== this.searchId) {
@@ -186,7 +186,7 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function (fi
 
       var $ul = $('<ul>');
 
-      items.forEach(function (value, index) {
+      items.forEach(function(value, index) {
         var $li = $('<li>');
         var $container = $('<div>');
         $ul.append($li);
@@ -209,7 +209,7 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function (fi
         qSwitcher.valueObjects[index] = {
           'index': index,
           'value': value,
-          '$li': $li
+          '$li': $li,
         };
       });
 
@@ -219,7 +219,7 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function (fi
       qSwitcher.selectIndex(0);
     },
 
-    setError: function (searchId) {
+    setError: function(searchId) {
       if (searchId !== this.searchId) {
         return;
       }
@@ -227,11 +227,10 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function (fi
       this.usePane(this.$oopsResults);
     },
 
-    renderBreadcrumb: function ()
-    {
+    renderBreadcrumb: function() {
       var $ul = $('<ul>');
 
-      this.callbackStack.forEach(function (value, index) {
+      this.callbackStack.forEach(function(value, index) {
         var $li = $('<li>');
         $li.text(value.text);
         $ul.append($li);
@@ -240,7 +239,7 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function (fi
       this.$breadcrumb.html($ul);
     },
 
-    setListText: function ($element, value) {
+    setListText: function($element, value) {
       if (value.html) {
         $element.html((typeof value.html === 'function') ? value.html() : value.html);
         return;
@@ -254,7 +253,7 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function (fi
       $element.text(value);
     },
 
-    selectIndex: function (selectedIndex) {
+    selectIndex: function(selectedIndex) {
       if (this.selectedIndex !== null && this.valueObjects[this.selectedIndex]) {
         this.valueObjects[this.selectedIndex].$li.removeClass('lstr-qswitcher-result-selected');
       }
@@ -273,7 +272,7 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function (fi
       this.valueObjects[this.selectedIndex].$li.addClass('lstr-qswitcher-result-selected');
     },
 
-    scrollToSelectedItem: function () {
+    scrollToSelectedItem: function() {
       if (null === this.selectedIndex) {
         return;
       }
@@ -291,7 +290,7 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function (fi
       }
     },
 
-    toggleSwitcher: function () {
+    toggleSwitcher: function() {
       this.useRootCallback();
       this.$search.val('');
       this.searchText = '';
@@ -301,11 +300,11 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function (fi
       this.$search.focus();
     },
 
-    closeSwitcher: function () {
+    closeSwitcher: function() {
       this.$parentDom.removeClass('lstr-qswitcher-noscroll');
     },
 
-    triggerSelect: function (index, event) {
+    triggerSelect: function(index, event) {
       if (null === index) {
         return;
       }
@@ -350,7 +349,7 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function (fi
       }
     },
 
-    popCallback: function () {
+    popCallback: function() {
       var callbacks = this.callbackStack.pop();
       if (!callbacks) {
         return false;
@@ -361,13 +360,13 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function (fi
       return true;
     },
 
-    useRootCallback: function () {
+    useRootCallback: function() {
       while (this.callbackStack.length > 0) {
         this.popCallback();
       }
     },
 
-    usePane: function ($paneToUse) {
+    usePane: function($paneToUse) {
       this.$results.hide();
       this.$noSearchTerms.hide();
       this.$noResults.hide();
@@ -384,10 +383,10 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function (fi
       this.searchDelay = options.searchDelay;
       this.selectCallback = options.selectCallback;
       this.selectChildSearchCallback = options.selectChildSearchCallback;
-    }
+    },
   };
 
-  lstrQuickSwitcher = function (options) {
+  lstrQuickSwitcher = function(options) {
     var $parentDom = $('body');
 
     var quickSwitcher = Object.create(QuickSwitcher);

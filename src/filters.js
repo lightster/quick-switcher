@@ -1,4 +1,4 @@
-define('filters', [], function () {
+define('filters', [], function() {
   return {
     isFuzzyMatch: function(needle, haystack) {
       for (var i = 0, j = 0; i < needle.length && j < haystack.length; i++) {
@@ -32,7 +32,7 @@ define('filters', [], function () {
       }
 
       return false;
-      //return this.isFuzzyMatch(needle, haystack);
-    }
+      // return this.isFuzzyMatch(needle, haystack);
+    },
   };
 });

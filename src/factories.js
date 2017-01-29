@@ -1,4 +1,4 @@
-define('factories', ['tracker'], function (Tracker) {
+define('factories', ['tracker'], function(Tracker) {
   var loadedTrackers = {};
 
   return {
@@ -13,6 +13,6 @@ define('factories', ['tracker'], function (Tracker) {
       loadedTrackers[trackerName] = trackerInstance;
 
       return loadedTrackers[trackerName];
-    }
+    },
   };
 });

@@ -1,6 +1,6 @@
-define('tracker', [], function () {
+define('tracker', [], function() {
   return {
-    init: function (trackerName) {
+    init: function(trackerName) {
       this.name = trackerName;
       this.localStorageName = 'qswitcher-tracker-' + trackerName;
       this.selections = {};
@@ -14,7 +14,7 @@ define('tracker', [], function () {
       }
     },
 
-    trackSelection: function (item) {
+    trackSelection: function(item) {
       if (!item.trackerId) {
         return;
       }
@@ -24,7 +24,7 @@ define('tracker', [], function () {
       if (!this.selections[trackerId]) {
         this.selections[trackerId] = {
           count: 0,
-          timestamps: []
+          timestamps: [],
         };
       }
 
@@ -38,16 +38,16 @@ define('tracker', [], function () {
       this.save();
     },
 
-    sort: function (items) {
+    sort: function(items) {
       var tracker = this;
       var originalOrder = 0;
-      items.forEach(function (item) {
+      items.forEach(function(item) {
         item._qswitcherOriginalOrder = originalOrder;
         item._qswitcherScore = tracker.scoreSelection(item);
         originalOrder++;
       });
 
-      items.sort(function (a, b) {
+      items.sort(function(a, b) {
         if (a._qswitcherScore == b._qswitcherScore) {
           return a._qswitcherOriginalOrder < b._qswitcherOriginalOrder ? -1 : 1;
         }
@@ -55,14 +55,14 @@ define('tracker', [], function () {
         return a._qswitcherScore > b._qswitcherScore ? -1 : 1;
       });
 
-      items.forEach(function (item) {
+      items.forEach(function(item) {
         delete item._qswitcherOriginalOrder;
       });
 
       return items;
     },
 
-    save: function () {
+    save: function() {
       if (!window.localStorage) {
         return;
       }
@@ -70,7 +70,7 @@ define('tracker', [], function () {
       localStorage.setItem(this.localStorageName, JSON.stringify(this.selections));
     },
 
-    scoreSelection: function (item) {
+    scoreSelection: function(item) {
       var selection = this.selections[item.trackerId];
 
       if (typeof selection === 'undefined' || selection.timestamps.length === 0) {
@@ -85,7 +85,7 @@ define('tracker', [], function () {
        * https://slack.engineering/a-faster-smarter-quick-switcher-77cbc193cb60#.cb5ofyxyl
        */
       var score = selection.timestamps.reduce(
-        function (score, timestamp) {
+        function(score, timestamp) {
           if (timestamp > now - (3600 * 4)) {
             return score + 100;
           }
@@ -116,6 +116,6 @@ define('tracker', [], function () {
       );
 
       return selection.count * score / selection.timestamps.length;
-    }
+    },
   };
 });
