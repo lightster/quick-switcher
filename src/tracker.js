@@ -1,4 +1,8 @@
 define('tracker', [], function() {
+  var time = function() {
+    return Math.floor(new Date().getTime() / 1000);
+  };
+
   return {
     init: function(trackerName) {
       this.name = trackerName;
@@ -9,8 +13,9 @@ define('tracker', [], function() {
         return;
       }
 
-      if (localStorage.getItem(this.localStorageName)) {
-        this.selections = JSON.parse(localStorage.getItem(this.localStorageName));
+      var selections = localStorage.getItem(this.localStorageName);
+      if (selections) {
+        this.selections = JSON.parse(selections);
       }
     },
 
@@ -28,7 +33,7 @@ define('tracker', [], function() {
         };
       }
 
-      this.selections[trackerId].timestamps.push(Math.floor(new Date().getTime() / 1000));
+      this.selections[trackerId].timestamps.push(time());
       ++this.selections[trackerId].count;
 
       while (this.selections[trackerId].timestamps.length > 10) {
@@ -67,17 +72,20 @@ define('tracker', [], function() {
         return;
       }
 
-      localStorage.setItem(this.localStorageName, JSON.stringify(this.selections));
+      localStorage.setItem(
+        this.localStorageName,
+        JSON.stringify(this.selections)
+      );
     },
 
     scoreSelection: function(item) {
       var selection = this.selections[item.trackerId];
 
-      if (typeof selection === 'undefined' || selection.timestamps.length === 0) {
+      if (typeof selection === 'undefined' || !selection.timestamps.length) {
         return 0;
       }
 
-      var now = Math.floor(new Date().getTime() / 1000);
+      var now = time();
 
       /**
        * Scoring based on weights and calculation used by Slack as

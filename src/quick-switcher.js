@@ -1,10 +1,13 @@
 define('quick-switcher', ['filters', 'selected-result', 'sorters'], function(filters, SelectedResult, sorters) {
   var $ = jQuery;
-  var exports = window;
 
   var ResultHandler = {
     filters: filters,
     sorters: sorters,
+  };
+
+  var callbackOrValue = function(value) {
+    return (typeof value === 'function') ? value() : value;
   };
 
   var QuickSwitcher = {
@@ -74,7 +77,9 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function(fil
         '    <div class="lstr-qswitcher-loading">Loading...</div>' +
         '    <div class="lstr-qswitcher-no-terms"></div>' +
         '    <div class="lstr-qswitcher-no-results">No results found</div>' +
-        '    <div class="lstr-qswitcher-oops-results">Oops! Something went wrong while trying to load your results.</div>' +
+        '    <div class="lstr-qswitcher-oops-results">' +
+        '      Oops! Something went wrong while trying to load your results.' +
+        '    </div>' +
         '    <div class="lstr-qswitcher-results"></div>' +
         '  </form>' +
         '</div>'
@@ -90,15 +95,18 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function(fil
       this.$noResults = this.$domElement.find('.lstr-qswitcher-no-results');
       this.$oopsResults = this.$domElement.find('.lstr-qswitcher-oops-results');
 
-      this.$domElement.find('.lstr-qswitcher-popup').on('submit', function(event) {
+      var $domElement = this.$domElement;
+
+      $domElement.find('.lstr-qswitcher-popup').on('submit', function(event) {
         event.preventDefault();
       });
-      this.$parentDom.find('.lstr-qswitcher-overlay').on('click', function(event) {
+      $parentDom.find('.lstr-qswitcher-overlay').on('click', function(event) {
         qSwitcher.closeSwitcher();
         event.preventDefault();
       });
-      this.$parentDom.on('keydown', function(event) {
-        if (event[qSwitcher.modifierKey] && String.fromCharCode(event.which) === qSwitcher.hotKey) {
+      $parentDom.on('keydown', function(event) {
+        var keyPressed = String.fromCharCode(event.which);
+        if (event[qSwitcher.modifierKey] && keyPressed === qSwitcher.hotKey) {
           qSwitcher.toggleSwitcher();
           event.preventDefault();
         }
@@ -116,7 +124,6 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function(fil
           qSwitcher.toggleSwitcher();
           event.preventDefault();
         } else if (13 === event.keyCode) {
-          var $li = $(this);
           qSwitcher.triggerSelect(qSwitcher.selectedIndex, event);
           event.preventDefault();
         }
@@ -135,16 +142,17 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function(fil
             qSwitcher.searchText = searchText;
             qSwitcher.renderList();
           }, qSwitcher.searchDelay);
-        } else if (event.which === 8 && '' === searchText) { // backspace with text box blank
+        } else if (event.which === 8 && '' === searchText) {
+          // backspace with text box blank
           qSwitcher.popCallback();
           qSwitcher.renderList();
         }
       });
-      this.$domElement.on('hover', '.lstr-qswitcher-results li', function() {
+      $domElement.on('hover', '.lstr-qswitcher-results li', function() {
         var $li = $(this);
         qSwitcher.selectIndex($li.data('lstr-qswitcher').index);
       });
-      this.$domElement.on('click', '.lstr-qswitcher-results li', function(event) {
+      $domElement.on('click', '.lstr-qswitcher-results li', function(event) {
         var $li = $(this);
         qSwitcher.triggerSelect($li.data('lstr-qswitcher').index, event);
       });
@@ -164,7 +172,10 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function(fil
       ++this.searchId;
       resultHandler.setResults = this.setResults.bind(this, this.searchId);
       resultHandler.setError = this.setError.bind(this, this.searchId);
-      this.abortSearchCallback = this.searchCallback(this.searchText, resultHandler);
+      this.abortSearchCallback = this.searchCallback(
+        this.searchText,
+        resultHandler
+      );
     },
 
     setResults: function(searchId, items) {
@@ -194,7 +205,9 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function(fil
         qSwitcher.setListText($container, value);
 
         if (value.description) {
-          var $description = $('<span class="lstr-qswitcher-results-description"></span>');
+          var $description = $(
+            '<span class="lstr-qswitcher-results-description"></span>'
+          );
           qSwitcher.setListText($description, value.description);
           $li.prepend($description);
         }
@@ -241,12 +254,12 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function(fil
 
     setListText: function($element, value) {
       if (value.html) {
-        $element.html((typeof value.html === 'function') ? value.html() : value.html);
+        $element.html(callbackOrValue(value.html));
         return;
       }
 
       if (value.text) {
-        $element.text((typeof value.text === 'function') ? value.text() : value.text);
+        $element.html(callbackOrValue(value.text));
         return;
       }
 
@@ -254,8 +267,11 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function(fil
     },
 
     selectIndex: function(selectedIndex) {
-      if (this.selectedIndex !== null && this.valueObjects[this.selectedIndex]) {
-        this.valueObjects[this.selectedIndex].$li.removeClass('lstr-qswitcher-result-selected');
+      if (this.selectedIndex !== null
+        && this.valueObjects[this.selectedIndex]
+      ) {
+        this.valueObjects[this.selectedIndex]
+          .$li.removeClass('lstr-qswitcher-result-selected');
       }
 
       if (null === selectedIndex || 0 === this.valueObjects.length) {
@@ -269,7 +285,8 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function(fil
         this.selectedIndex = this.valueObjects.length - 1;
       }
 
-      this.valueObjects[this.selectedIndex].$li.addClass('lstr-qswitcher-result-selected');
+      this.valueObjects[this.selectedIndex]
+        .$li.addClass('lstr-qswitcher-result-selected');
     },
 
     scrollToSelectedItem: function() {
@@ -332,7 +349,8 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function(fil
           this.selectCallback = selectedValue.selectCallback;
         }
         if (selectedValue.selectChildSearchCallback) {
-          this.selectChildSearchCallback = selectedValue.selectChildSearchCallback;
+          this.selectChildSearchCallback
+            = selectedValue.selectChildSearchCallback;
         }
 
         this.valueObjects = [];
