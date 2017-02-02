@@ -2,6 +2,21 @@ define('tracker', [], function() {
   var time = function() {
     return Math.floor(new Date().getTime() / 1000);
   };
+  var Selection = {
+    init: function() {
+      this.timestamps = [];
+      this.count = 0;
+    },
+
+    increment: function() {
+      this.timestamps.push(time());
+      ++this.count;
+
+      while (this.timestamps.length > 10) {
+        this.timestamps.shift();
+      }
+    },
+  };
 
   return {
     init: function(trackerName) {
@@ -27,18 +42,11 @@ define('tracker', [], function() {
       var trackerId = item.trackerId;
 
       if (!this.selections[trackerId]) {
-        this.selections[trackerId] = {
-          count: 0,
-          timestamps: [],
-        };
+        this.selections[trackerId] = Object.create(Selection);
+        this.selections[trackerId].init();
       }
 
-      this.selections[trackerId].timestamps.push(time());
-      ++this.selections[trackerId].count;
-
-      while (this.selections[trackerId].timestamps.length > 10) {
-        this.selections[trackerId].timestamps.shift();
-      }
+      this.selections[trackerId].increment();
 
       this.save();
     },
