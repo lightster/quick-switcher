@@ -3,7 +3,13 @@ define('tracker', [], function() {
     return Math.floor(new Date().getTime() / 1000);
   };
   var Selection = {
-    init: function() {
+    init: function(data) {
+      if (data) {
+        this.timestamps = data.timestamps;
+        this.count = data.count;
+        return;
+      }
+
       this.timestamps = [];
       this.count = 0;
     },
@@ -31,6 +37,14 @@ define('tracker', [], function() {
       var selections = localStorage.getItem(this.localStorageName);
       if (selections) {
         this.selections = JSON.parse(selections);
+
+        var tracker = this;
+        Object.keys(this.selections).forEach(function(key) {
+          var selection = Object.create(Selection);
+          selection.init(tracker.selections[key]);
+
+          tracker.selections[key] = selection;
+        });
       }
     },
 
