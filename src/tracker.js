@@ -84,6 +84,7 @@ define('tracker', [], function() {
 
       items.forEach(function(item) {
         delete item._qswitcherOriginalOrder;
+        delete item._qswitcherScore;
       });
 
       return items;
