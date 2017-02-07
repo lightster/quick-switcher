@@ -1,4 +1,4 @@
-define('quick-switcher', ['filters', 'selected-result', 'sorters'], function(filters, SelectedResult, sorters) {
+var quickSwitcher = function(filters, SelectedResult, sorters) {
   var $ = jQuery;
 
   var ResultHandler = {
@@ -412,4 +412,10 @@ define('quick-switcher', ['filters', 'selected-result', 'sorters'], function(fil
   };
 
   return lstrQuickSwitcher;
-});
+};
+
+define(
+  'quick-switcher',
+  ['filters', 'selected-result', 'sorters'],
+  quickSwitcher
+);
