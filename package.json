@@ -2,10 +2,13 @@
   "name": "quick-switcher",
   "version": "0.2.0",
   "scripts": {
-    "build": "r.js -o build.js"
+    "build": "r.js -o build.js",
+    "test": "faucet test/"
   },
   "devDependencies": {
     "almond": "^0.3.3",
-    "requirejs": "^2.3.2"
+    "faucet": "0.0.1",
+    "requirejs": "^2.3.2",
+    "tape": "^4.6.3"
   }
 }
