@@ -10,7 +10,7 @@ test('simple substring can be found', function(t) {
 
   var filters = requirejs('filters');
 
-  t.assert(filters.isMatch('world', 'hello world and friends'));
+  t.ok(filters.isMatch('world', 'hello world and friends'));
 });
 
 test('multi-word search criteria can be matched', function(t) {
@@ -18,7 +18,7 @@ test('multi-word search criteria can be matched', function(t) {
 
   var filters = requirejs('filters');
 
-  t.assert(filters.isMatch('world friends', 'hello world and friends'));
+  t.ok(filters.isMatch('world friends', 'hello world and friends'));
 });
 
 test('all search words must be in search index to be a match', function(t) {
@@ -26,5 +26,5 @@ test('all search words must be in search index to be a match', function(t) {
 
   var filters = requirejs('filters');
 
-  t.assert(!filters.isMatch('world friends the', 'hello world and friends'));
+  t.notOk(filters.isMatch('world friends the', 'hello world and friends'));
 });
