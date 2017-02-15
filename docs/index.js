@@ -33,13 +33,13 @@ define(['quick-switcher'], function(lstrQuickSwitcher) {
                 } else if (item.html) {
                   text = item.html;
                 }
-                return peopleResultHandler.filters.isMatch(searchText, text);
+                return peopleResultHandler.filters.isMatch(searchText.toLowerCase(), text.toLowerCase());
               }).map(function (item) {
                 return {
                   text: item,
                   trackerId: item
                 };
-              })));
+              }), searchText));
             }, 1);
           },
           searchDelay: 500,
@@ -62,7 +62,7 @@ define(['quick-switcher'], function(lstrQuickSwitcher) {
         }
       ].filter(function(item) {
         return basicResultHandler.filters.isMatch(searchText, item.text);
-      })));
+      }), searchText));
     },
     selectCallback: function(selected) {
       selected.trackAs('main');

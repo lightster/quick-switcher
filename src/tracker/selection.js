@@ -1,73 +1,52 @@
-define('tracker/selection', function() {
-  var time = function() {
-    return Math.floor(new Date().getTime() / 1000);
+define('tracker/selection', ['tracker/statistic'], function(Statistic) {
+  var canonicalizeSearchKey = function(searchKey) {
+    return searchKey.toLowerCase();
   };
 
   return {
     init: function(data) {
       if (data) {
-        this.timestamps = data.timestamps;
-        this.count = data.count;
+        var selection = this;
+
+        this.overall = Statistic.create(data.overall);
+        this.searchKeys = {};
+        Object.keys(data.searchKeys).forEach(function(searchKey) {
+          searchKey = canonicalizeSearchKey(searchKey);
+
+          var stat = Statistic.create(data.searchKeys[searchKey]);
+          selection.searchKeys[searchKey] = stat;
+        });
+
         return;
       }
 
-      this.timestamps = [];
-      this.count = 0;
+      this.overall = Statistic.create();
+      this.searchKeys = {};
     },
 
-    increment: function() {
-      this.timestamps.push(time());
-      ++this.count;
+    increment: function(searchText) {
+      this.overall.increment();
 
-      while (this.timestamps.length > 10) {
-        this.timestamps.shift();
+      if(!searchText) {
+        return;
       }
+
+      searchText = canonicalizeSearchKey(searchText);
+
+      if(!this.searchKeys[searchText]) {
+        this.searchKeys[searchText] = Statistic.create();
+      }
+      this.searchKeys[searchText].increment();
     },
 
-    score: function() {
-      if(!this.timestamps.length) {
-        return 0;
+    score: function(searchText) {
+      searchText = canonicalizeSearchKey(searchText);
+
+      if(!searchText || !this.searchKeys[searchText]) {
+        return this.overall.score() * 0.5;
       }
 
-      var now = time();
-
-      /**
-       * Scoring based on weights and calculation used by Slack as
-       * described in their article:
-       * https://slack.engineering/a-faster-smarter-quick-switcher-77cbc193cb60#.cb5ofyxyl
-       */
-      var score = this.timestamps.reduce(
-        function(score, timestamp) {
-          if (timestamp > now - (3600 * 4)) {
-            return score + 100;
-          }
-
-          if (timestamp > now - (3600 * 24)) {
-            return score + 80;
-          }
-
-          if (timestamp > now - (3600 * 24 * 3)) {
-            return score + 60;
-          }
-
-          if (timestamp > now - (3600 * 7)) {
-            return score + 40;
-          }
-
-          if (timestamp > now - (3600 * 30)) {
-            return score + 20;
-          }
-
-          if (timestamp > now - (3600 * 90)) {
-            return score + 10;
-          }
-
-          return score;
-        },
-        0
-      );
-
-      return this.count * score / this.timestamps.length;
+      return this.searchKeys[searchText].score();
     },
   };
 });

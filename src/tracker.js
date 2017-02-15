@@ -23,7 +23,7 @@ define('tracker', ['tracker/selection'], function(Selection) {
       }
     },
 
-    trackSelection: function(item) {
+    trackSelection: function(item, searchText) {
       if (!item.trackerId) {
         return;
       }
@@ -35,17 +35,17 @@ define('tracker', ['tracker/selection'], function(Selection) {
         this.selections[trackerId].init();
       }
 
-      this.selections[trackerId].increment();
+      this.selections[trackerId].increment(searchText);
 
       this.save();
     },
 
-    sort: function(items) {
+    sort: function(items, searchText) {
       var tracker = this;
       var originalOrder = 0;
       items.forEach(function(item) {
         item._qswitcherOriginalOrder = originalOrder;
-        item._qswitcherScore = tracker.scoreSelection(item);
+        item._qswitcherScore = tracker.scoreSelection(item, searchText);
         originalOrder++;
       });
 
@@ -76,14 +76,14 @@ define('tracker', ['tracker/selection'], function(Selection) {
       );
     },
 
-    scoreSelection: function(item) {
+    scoreSelection: function(item, searchText) {
       var selection = this.selections[item.trackerId];
 
       if (typeof selection === 'undefined') {
         return 0;
       }
 
-      return selection.score();
+      return selection.score(searchText);
     },
   };
 });
