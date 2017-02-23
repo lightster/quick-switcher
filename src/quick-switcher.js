@@ -148,7 +148,7 @@ var quickSwitcher = function(filters, SelectedResult, sorters) {
           qSwitcher.renderList();
         }
       });
-      $domElement.on('hover', '.lstr-qswitcher-results li', function() {
+      $domElement.on('mouseover', '.lstr-qswitcher-results li', function() {
         var $li = $(this);
         qSwitcher.selectIndex($li.data('lstr-qswitcher').index);
       });
@@ -267,6 +267,10 @@ var quickSwitcher = function(filters, SelectedResult, sorters) {
     },
 
     selectIndex: function(selectedIndex) {
+      if (this.selectedIndex === selectedIndex) {
+        return;
+      }
+
       if (this.selectedIndex !== null
         && this.valueObjects[this.selectedIndex]
       ) {
