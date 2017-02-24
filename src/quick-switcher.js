@@ -267,10 +267,6 @@ var quickSwitcher = function(filters, SelectedResult, sorters) {
     },
 
     selectIndex: function(selectedIndex) {
-      if (this.selectedIndex === selectedIndex) {
-        return;
-      }
-
       if (this.selectedIndex !== null
         && this.valueObjects[this.selectedIndex]
       ) {
