@@ -404,7 +404,7 @@ var quickSwitcher = function(filters, SelectedResult, sorters) {
     },
   };
 
-  lstrQuickSwitcher = function(options) {
+  var lstrQuickSwitcher = function(options) {
     var $parentDom = $('body');
 
     var quickSwitcher = Object.create(QuickSwitcher);
