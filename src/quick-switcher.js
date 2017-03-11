@@ -230,6 +230,12 @@ var quickSwitcher = function(filters, SelectedResult, sorters) {
       this.usePane(this.$results);
 
       qSwitcher.selectIndex(0);
+      qSwitcher.scrollToSelectedItem();
+      if (window.requestAnimationFrame) {
+        window.requestAnimationFrame(function() {
+          qSwitcher.scrollToSelectedItem();
+        });
+      }
     },
 
     setError: function(searchId) {
@@ -290,12 +296,14 @@ var quickSwitcher = function(filters, SelectedResult, sorters) {
     },
 
     scrollToSelectedItem: function() {
-      if (null === this.selectedIndex) {
+      var $results = this.$results;
+
+      if (!this.selectedIndex) {
+        $results.scrollTop(0);
         return;
       }
 
       var $li = this.valueObjects[this.selectedIndex].$li;
-      var $results = this.$results;
 
       var topOfLi = $li.offset().top - $li.parent().offset().top;
       var bottomOfLi = topOfLi + $li.outerHeight(true);

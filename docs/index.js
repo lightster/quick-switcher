@@ -8,19 +8,26 @@ require.config({
 define(function(require) {
   var lstrQuickSwitcher = require('quick-switcher');
 
+  var numbers = [];
+  for (var i = 1; i < 100; i++) {
+    numbers.push({text: i + ''});
+  }
+
   lstrQuickSwitcher({
     searchCallback: function(searchText, basicResultHandler) {
       basicResultHandler.setResults(
         basicResultHandler.sorters.tracker('main').sort([
           require('docs/search/people'),
+          require('docs/search/colors'),
           require('docs/search/error'),
           {
             text: 'Quickest Item',
             trackerId: 'Quickest Item',
           },
-      ].filter(function(item) {
-        return basicResultHandler.filters.isMatch(searchText, item.text);
-      }), searchText));
+        ].concat(numbers).filter(function(item) {
+          return basicResultHandler.filters.isMatch(searchText, item.text);
+        }), searchText)
+      );
     },
     selectCallback: function(selected) {
       selected.trackAs('main');
