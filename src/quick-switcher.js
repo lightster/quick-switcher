@@ -73,7 +73,7 @@ var quickSwitcher = function(filters, SelectedResult, sorters) {
         '        <li><em>esc</em> to dismiss</li>' +
         '      </ul>' +
         '    </div>' +
-        '    <input type="text" class="lstr-qswitcher-search form-control" />' +
+        '    <div class="lstr-qswitcher-search-container"><input type="text" class="lstr-qswitcher-search form-control" /></div>' +
         '    <div class="lstr-qswitcher-loading">Loading...</div>' +
         '    <div class="lstr-qswitcher-no-terms"></div>' +
         '    <div class="lstr-qswitcher-no-results">No results found</div>' +
@@ -247,6 +247,12 @@ var quickSwitcher = function(filters, SelectedResult, sorters) {
     },
 
     renderBreadcrumb: function() {
+      if (this.callbackStack.length == 0) {
+        this.$domElement.removeClass('lstr-qswitcher-subsearch');
+        this.$breadcrumb.html('');
+        return;
+      }
+
       var $ul = $('<ul>');
 
       this.callbackStack.forEach(function(value, index) {
@@ -255,6 +261,7 @@ var quickSwitcher = function(filters, SelectedResult, sorters) {
         $ul.append($li);
       });
 
+      this.$domElement.addClass('lstr-qswitcher-subsearch');
       this.$breadcrumb.html($ul);
     },
 
