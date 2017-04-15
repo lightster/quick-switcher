@@ -62,20 +62,12 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
   {
     position: absolute;
     margin: 0 10px;
-    top: 76px;
+    top: 98px;
     left: 0;
     right: 0;
     bottom: 10px;
     overflow-x: hidden;
     overflow-y: auto;
-  }
-
-  .lstr-qswitcher-subsearch .lstr-qswitcher-results,
-  .lstr-qswitcher-subsearch .lstr-qswitcher-no-terms,
-  .lstr-qswitcher-subsearch .lstr-qswitcher-no-results,
-  .lstr-qswitcher-subsearch .lstr-qswitcher-oops-results
-  {
-    top: 98px;
   }
 
   .lstr-qswitcher-popup
@@ -84,6 +76,23 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
     height: 100%;
     border: 0;
     border-radius: 0;
+  }
+
+  .lstr-qswitcher-close,
+  .lstr-qswitcher-close:focus,
+  .lstr-qswitcher-close:hover
+  {
+    color: #666666;
+    display: inline-block;
+    font-size: 1.6em;
+    line-height: 0.9rem;
+    font-weight: bold;
+    padding: 10px 10px 5px 10px;
+    float: right;
+    height: 32px;
+    width: 50px;
+    text-align: right;
+    text-decoration: none;
   }
 }
 
@@ -139,6 +148,11 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
     background-color: #ffffff;
     border-radius: 5px;
     border: #ffffff 1px solid;
+  }
+
+  .lstr-qswitcher-close
+  {
+    display: none;
   }
 }
 

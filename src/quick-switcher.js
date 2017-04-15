@@ -73,6 +73,7 @@ var quickSwitcher = function(filters, SelectedResult, sorters) {
         '        <li><em>esc</em> to dismiss</li>' +
         '      </ul>' +
         '    </div>' +
+        '    <a href="#" class="lstr-qswitcher-close">&#x00d7;</a>' +
         '    <div class="lstr-qswitcher-search-container"><input type="text" class="lstr-qswitcher-search form-control" /></div>' +
         '    <div class="lstr-qswitcher-loading">Loading...</div>' +
         '    <div class="lstr-qswitcher-no-terms"></div>' +
@@ -88,6 +89,7 @@ var quickSwitcher = function(filters, SelectedResult, sorters) {
       $parentDom.append(this.$domElement);
 
       this.$breadcrumb = this.$domElement.find('.lstr-qswitcher-breadcrumb');
+      this.$close = this.$domElement.find('.lstr-qswitcher-close');
       this.$search = this.$domElement.find('.lstr-qswitcher-search');
       this.$loading = this.$domElement.find('.lstr-qswitcher-loading');
       this.$results = this.$domElement.find('.lstr-qswitcher-results');
@@ -127,6 +129,9 @@ var quickSwitcher = function(filters, SelectedResult, sorters) {
           qSwitcher.triggerSelect(qSwitcher.selectedIndex, event);
           event.preventDefault();
         }
+      });
+      this.$close.on('click', function(event) {
+        qSwitcher.closeSwitcher();
       });
       this.$search.on('keyup', function(event) {
         var searchText = qSwitcher.$search.val();
