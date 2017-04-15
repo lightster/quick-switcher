@@ -73,7 +73,8 @@ var quickSwitcher = function(filters, SelectedResult, sorters) {
         '        <li><em>esc</em> to dismiss</li>' +
         '      </ul>' +
         '    </div>' +
-        '    <input type="text" class="lstr-qswitcher-search form-control" />' +
+        '    <a href="#" class="lstr-qswitcher-close">&#x00d7;</a>' +
+        '    <div class="lstr-qswitcher-search-container"><input type="text" class="lstr-qswitcher-search form-control" /></div>' +
         '    <div class="lstr-qswitcher-loading">Loading...</div>' +
         '    <div class="lstr-qswitcher-no-terms"></div>' +
         '    <div class="lstr-qswitcher-no-results">No results found</div>' +
@@ -88,6 +89,7 @@ var quickSwitcher = function(filters, SelectedResult, sorters) {
       $parentDom.append(this.$domElement);
 
       this.$breadcrumb = this.$domElement.find('.lstr-qswitcher-breadcrumb');
+      this.$close = this.$domElement.find('.lstr-qswitcher-close');
       this.$search = this.$domElement.find('.lstr-qswitcher-search');
       this.$loading = this.$domElement.find('.lstr-qswitcher-loading');
       this.$results = this.$domElement.find('.lstr-qswitcher-results');
@@ -127,6 +129,9 @@ var quickSwitcher = function(filters, SelectedResult, sorters) {
           qSwitcher.triggerSelect(qSwitcher.selectedIndex, event);
           event.preventDefault();
         }
+      });
+      this.$close.on('click', function(event) {
+        qSwitcher.closeSwitcher();
       });
       this.$search.on('keyup', function(event) {
         var searchText = qSwitcher.$search.val();
@@ -247,6 +252,12 @@ var quickSwitcher = function(filters, SelectedResult, sorters) {
     },
 
     renderBreadcrumb: function() {
+      if (this.callbackStack.length == 0) {
+        this.$domElement.removeClass('lstr-qswitcher-subsearch');
+        this.$breadcrumb.html('');
+        return;
+      }
+
       var $ul = $('<ul>');
 
       this.callbackStack.forEach(function(value, index) {
@@ -255,6 +266,7 @@ var quickSwitcher = function(filters, SelectedResult, sorters) {
         $ul.append($li);
       });
 
+      this.$domElement.addClass('lstr-qswitcher-subsearch');
       this.$breadcrumb.html($ul);
     },
 
@@ -316,6 +328,15 @@ var quickSwitcher = function(filters, SelectedResult, sorters) {
     },
 
     toggleSwitcher: function() {
+      if (this.$parentDom.hasClass('lstr-qswitcher-noscroll')) {
+        this.closeSwitcher();
+        return;
+      }
+
+      return this.openSwitcher();
+    },
+
+    openSwitcher: function() {
       this.useRootCallback();
       this.$search.val('');
       this.searchText = '';
@@ -417,6 +438,10 @@ var quickSwitcher = function(filters, SelectedResult, sorters) {
 
     var quickSwitcher = Object.create(QuickSwitcher);
     quickSwitcher.init($parentDom, options);
+
+    return {
+      open: quickSwitcher.openSwitcher.bind(quickSwitcher),
+    };
   };
 
   return lstrQuickSwitcher;
