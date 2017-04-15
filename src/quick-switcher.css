@@ -76,6 +76,9 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
     -webkit-overflow-scrolling: touch;
   }
 
+  .lstr-qswitcher-no-terms,
+  .lstr-qswitcher-no-results,
+  .lstr-qswitcher-oops-results,
   .lstr-qswitcher-results li
   {
     padding: 12px 9px 12px 9px;
