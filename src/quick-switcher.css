@@ -73,6 +73,7 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
     bottom: 10px;
     overflow-x: hidden;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .lstr-qswitcher-results li
@@ -155,6 +156,7 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
     max-height: 320px;
     overflow-x: hidden;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .lstr-qswitcher-results li
