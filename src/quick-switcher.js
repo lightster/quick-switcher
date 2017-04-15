@@ -160,6 +160,7 @@ var quickSwitcher = function(filters, SelectedResult, sorters) {
       $domElement.on('touchstart', '.lstr-qswitcher-results li', function() {
         var $li = $(this);
         qSwitcher.selectIndex($li.data('lstr-qswitcher').index);
+        qSwitcher.$search.blur();
       });
       $domElement.on('click', '.lstr-qswitcher-results li', function(event) {
         var $li = $(this);
