@@ -157,6 +157,10 @@ var quickSwitcher = function(filters, SelectedResult, sorters) {
         var $li = $(this);
         qSwitcher.selectIndex($li.data('lstr-qswitcher').index);
       });
+      $domElement.on('touchstart', '.lstr-qswitcher-results li', function() {
+        var $li = $(this);
+        qSwitcher.selectIndex($li.data('lstr-qswitcher').index);
+      });
       $domElement.on('click', '.lstr-qswitcher-results li', function(event) {
         var $li = $(this);
         qSwitcher.triggerSelect($li.data('lstr-qswitcher').index, event);
