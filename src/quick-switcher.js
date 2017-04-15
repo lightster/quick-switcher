@@ -390,6 +390,7 @@ var quickSwitcher = function(filters, SelectedResult, sorters) {
         this.valueObjects = [];
         this.selectIndex(null);
         this.$search.val('');
+        this.$search.focus();
         this.searchText = '';
         this.renderList();
 
