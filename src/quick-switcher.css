@@ -31,11 +31,6 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
     bottom: 0;
     left: 0;
     right: 0;
-    /*top: 20%;
-    max-width: 500px;
-    margin: 0 0 0 -250px;
-    left: 50%;
-    font-size: .9em;*/
     overflow: hidden;
   }
 
@@ -48,13 +43,6 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
   {
     width: 100%;
     border-color: #666666;
-    /*padding: 7px;*/
-    /*margin: 5px 100px 10px 10px;*/
-    /*position: absolute;*/
-    /*top: 0;*/
-    /*left: 10px;*/
-    /*right: 10px;*/
-    /*bottom: 0;*/
     font-size: 2.5em;
     line-height: 1.2em;
     height: auto;
@@ -72,16 +60,12 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
   .lstr-qswitcher-no-results,
   .lstr-qswitcher-oops-results
   {
-    /*width: 480px;*/
     position: absolute;
-    /*height: 100%;*/
     margin: 0 10px;
-    /*padding-bottom: 100px;*/
     top: 76px;
     left: 0;
     right: 0;
     bottom: 10px;
-    /*height: 100%;*/
     overflow-x: hidden;
     overflow-y: auto;
   }
@@ -96,14 +80,10 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
 
   .lstr-qswitcher-popup
   {
-    /*position: fixed;*/
     background-color: #ffffff;
     height: 100%;
     border: 0;
     border-radius: 0;
-    /*background-color: #ffffff;
-    border-radius: 5px;
-    border: #ffffff 1px solid;*/
   }
 }
 
