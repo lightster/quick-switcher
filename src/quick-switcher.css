@@ -36,7 +36,12 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
 
   .lstr-qswitcher-search-container
   {
-    padding: 10px 10px 10px 10px;
+    padding: 10px;
+  }
+
+  .lstr-qswitcher-breadcrumb li
+  {
+    margin: 12px;
   }
 
   input.lstr-qswitcher-search
@@ -62,7 +67,7 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
   {
     position: absolute;
     margin: 0 10px;
-    top: 98px;
+    top: 105px;
     left: 0;
     right: 0;
     bottom: 10px;
@@ -92,9 +97,9 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
     font-size: 1.6em;
     line-height: 0.9rem;
     font-weight: bold;
-    padding: 10px 10px 5px 10px;
+    padding: 12px;
     float: right;
-    height: 32px;
+    height: 39px;
     width: 50px;
     text-align: right;
     text-decoration: none;
@@ -116,6 +121,11 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
   .lstr-qswitcher-search-container
   {
     padding: 5px 10px 10px 10px;
+  }
+
+  .lstr-qswitcher-breadcrumb li
+  {
+    margin: 10px 10px 5px 10px;
   }
 
   input.lstr-qswitcher-search
@@ -215,7 +225,6 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
 .lstr-qswitcher-breadcrumb li
 {
   float: left;
-  margin: 10px 10px 5px 10px;
   padding: 0;
 }
 
