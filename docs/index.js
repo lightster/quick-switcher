@@ -13,7 +13,7 @@ define(function(require) {
     numbers.push({text: i + ''});
   }
 
-  lstrQuickSwitcher({
+  var qs = lstrQuickSwitcher({
     searchCallback: function(searchText, basicResultHandler) {
       basicResultHandler.setResults(
         basicResultHandler.sorters.tracker('main').sort([
@@ -38,4 +38,6 @@ define(function(require) {
     },
     searchDelay: 0,
   });
+
+  $('#open-qswitcher').on('click', qs.open.bind(qs));
 });

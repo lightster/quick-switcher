@@ -323,6 +323,15 @@ var quickSwitcher = function(filters, SelectedResult, sorters) {
     },
 
     toggleSwitcher: function() {
+      if (this.$parentDom.hasClass('lstr-qswitcher-noscroll')) {
+        this.closeSwitcher();
+        return;
+      }
+
+      return this.openSwitcher();
+    },
+
+    openSwitcher: function() {
       this.useRootCallback();
       this.$search.val('');
       this.searchText = '';
@@ -424,6 +433,10 @@ var quickSwitcher = function(filters, SelectedResult, sorters) {
 
     var quickSwitcher = Object.create(QuickSwitcher);
     quickSwitcher.init($parentDom, options);
+
+    return {
+      open: quickSwitcher.openSwitcher.bind(quickSwitcher),
+    };
   };
 
   return lstrQuickSwitcher;
