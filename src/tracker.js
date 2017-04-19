@@ -42,24 +42,28 @@ define('tracker', ['tracker/selection'], function(Selection) {
 
     sort: function(items, searchText) {
       var tracker = this;
-      var originalOrder = 0;
-      items.forEach(function(item) {
-        item._qswitcherOriginalOrder = originalOrder;
-        item._qswitcherScore = tracker.scoreSelection(item, searchText);
-        originalOrder++;
+      items.forEach(function(item, index) {
+        item._qswitcher = {
+          index: index,
+          score: tracker.scoreSelection(item, searchText),
+          sort: item.trackerStaticSort ? item.trackerStaticSort : 0,
+        };
       });
 
       items.sort(function(a, b) {
-        if (a._qswitcherScore == b._qswitcherScore) {
-          return a._qswitcherOriginalOrder < b._qswitcherOriginalOrder ? -1 : 1;
+        if (a._qswitcher.sort != b._qswitcher.sort) {
+          return a._qswitcher.sort < b._qswitcher.sort ? -1 : 1;
         }
 
-        return a._qswitcherScore > b._qswitcherScore ? -1 : 1;
+        if (a._qswitcher.score == b._qswitcher.score) {
+          return a._qswitcher.index < b._qswitcher.index ? -1 : 1;
+        }
+
+        return a._qswitcher.score > b._qswitcher.score ? -1 : 1;
       });
 
       items.forEach(function(item) {
-        delete item._qswitcherOriginalOrder;
-        delete item._qswitcherScore;
+        delete item._qswitcher;
       });
 
       return items;
