@@ -22,7 +22,7 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
 }
 
 
-@media (max-width: 499px), (max-height: 499px) {
+@media (max-width: 499px), (max-height: 425px) {
   .lstr-qswitcher-container
   {
     display: none;
@@ -110,7 +110,7 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
   }
 }
 
-@media (min-width: 500px) and (min-height: 500px)  {
+@media (min-width: 500px) and (min-height: 426px)  {
   .lstr-qswitcher-container
   {
     display: none;
