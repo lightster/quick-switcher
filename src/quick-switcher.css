@@ -21,8 +21,7 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
   right: 0;
 }
 
-
-@media (max-width: 499px), (max-height: 425px) {
+@media (max-width: 499px) {
   .lstr-qswitcher-container
   {
     display: none;
@@ -36,7 +35,7 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
 
   .lstr-qswitcher-search-container
   {
-    padding: 10px;
+    padding: 0 10px 10px 10px;
   }
 
   .lstr-qswitcher-breadcrumb li
@@ -65,15 +64,11 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
   .lstr-qswitcher-no-results,
   .lstr-qswitcher-oops-results
   {
-    position: absolute;
-    margin: 0 10px;
-    top: 105px;
-    left: 0;
-    right: 0;
-    bottom: 10px;
+    margin: 0 10px 10px 10px;
     overflow-x: hidden;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    flex-grow: 1;
   }
 
   .lstr-qswitcher-no-terms,
@@ -90,6 +85,8 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
     height: 100%;
     border: 0;
     border-radius: 0;
+    display: flex;
+    flex-direction: column;
   }
 
   .lstr-qswitcher-close,
@@ -102,15 +99,14 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
     line-height: 0.9rem;
     font-weight: bold;
     padding: 12px;
+    margin-bottom: 5px;
     float: right;
-    height: 41px;
-    width: 50px;
     text-align: right;
     text-decoration: none;
   }
 }
 
-@media (min-width: 500px) and (min-height: 426px)  {
+@media (min-width: 500px)  {
   .lstr-qswitcher-container
   {
     display: none;
@@ -124,7 +120,7 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
 
   .lstr-qswitcher-search-container
   {
-    padding: 5px 10px 10px 10px;
+    padding: 0 10px 10px 10px;
   }
 
   .lstr-qswitcher-breadcrumb li
@@ -160,6 +156,7 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
     overflow-x: hidden;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    flex-grow: 1;
   }
 
   .lstr-qswitcher-results li
@@ -173,11 +170,25 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
     background-color: #ffffff;
     border-radius: 5px;
     border: #ffffff 1px solid;
+    display: flex;
+    flex-direction: column;
   }
 
   .lstr-qswitcher-close
   {
     display: none;
+  }
+}
+
+@media (max-height: 426px) {
+  .lstr-qswitcher-container {
+    height: 100%;
+    top: 0;
+    margin-top: 0;
+  }
+
+  .lstr-qswitcher-popup {
+    height: 100%;
   }
 }
 
