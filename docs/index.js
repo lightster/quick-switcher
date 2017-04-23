@@ -2,6 +2,7 @@ require.config({
   baseUrl: 'src',
   paths: {
     'docs': '../docs',
+    'text': '../node_modules/requirejs-text/text',
   },
 });
 

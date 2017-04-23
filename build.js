@@ -7,4 +7,7 @@
     startFile: '.almond/start.frag',
     endFile: '.almond/end.frag',
   },
+  paths: {
+    'text': '../node_modules/requirejs-text/text',
+  },
 });

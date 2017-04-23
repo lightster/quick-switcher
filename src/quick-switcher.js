@@ -1,4 +1,4 @@
-var quickSwitcher = function(filters, SelectedResult, sorters) {
+var quickSwitcher = function(filters, SelectedResult, sorters, html) {
   var $ = jQuery;
 
   var ResultHandler = {
@@ -58,35 +58,7 @@ var quickSwitcher = function(filters, SelectedResult, sorters) {
       var qSwitcher = this;
 
       this.$parentDom = $parentDom;
-      this.$domElement = $(
-        '<div class="lstr-qswitcher-overlay">' +
-        '</div>' +
-        '<div class="lstr-qswitcher-container">' +
-        '  <form class="lstr-qswitcher-popup">' +
-        '    <div class="lstr-qswitcher-header">' +
-        '      <div class="lstr-qswitcher-breadcrumb">' +
-        '      </div>' +
-        '      <div class="lstr-qswitcher-help">' +
-        '        <ul>' +
-        '          <li><em>&#8597;</em> to navigate</li>' +
-        '          <li><em>&#8629;</em> to select</li>' +
-        '          <li><em>&#9003;</em> to clear</li>' +
-        '          <li><em>esc</em> to dismiss</li>' +
-        '        </ul>' +
-        '      </div>' +
-        '      <a href="#" class="lstr-qswitcher-close">&#x00d7;</a>' +
-        '    </div>' +
-        '    <div class="lstr-qswitcher-search-container"><input type="text" class="lstr-qswitcher-search form-control" /></div>' +
-        '    <div class="lstr-qswitcher-loading">Loading...</div>' +
-        '    <div class="lstr-qswitcher-no-terms"></div>' +
-        '    <div class="lstr-qswitcher-no-results">No results found</div>' +
-        '    <div class="lstr-qswitcher-oops-results">' +
-        '      Oops! Something went wrong while trying to load your results.' +
-        '    </div>' +
-        '    <div class="lstr-qswitcher-results"></div>' +
-        '  </form>' +
-        '</div>'
-      );
+      this.$domElement = $(html);
 
       $parentDom.append(this.$domElement);
 
@@ -457,6 +429,6 @@ var quickSwitcher = function(filters, SelectedResult, sorters) {
 
 define(
   'quick-switcher',
-  ['filters', 'selected-result', 'sorters'],
+  ['filters', 'selected-result', 'sorters', 'text!quick-switcher.html'],
   quickSwitcher
 );
