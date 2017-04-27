@@ -11,7 +11,7 @@ define(function(require) {
 
   var numbers = [];
   for (var i = 1; i < 100; i++) {
-    numbers.push({text: i + ''});
+    numbers.push({text: i + '', description: 'Number'});
   }
 
   var qs = lstrQuickSwitcher({

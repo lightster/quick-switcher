@@ -298,3 +298,7 @@ li .lstr-qswitcher-result-description {
   float: right;
   color: #999;
 }
+
+li.lstr-qswitcher-result-selected .lstr-qswitcher-result-description {
+  color: #ffffff;
+}
