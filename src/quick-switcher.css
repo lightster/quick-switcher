@@ -292,7 +292,7 @@ li.lstr-qswitcher-result-selected
   border-radius: 3px;
 }
 
-.lstr-qswitcher-results li .lstr-qswitcher-results-description {
+li .lstr-qswitcher-result-description {
   font-size: .9em;
   margin-left: 10px;
   float: right;

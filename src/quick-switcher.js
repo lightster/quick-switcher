@@ -190,7 +190,7 @@ var quickSwitcher = function(filters, SelectedResult, sorters, html) {
 
         if (value.description) {
           var $description = $(
-            '<span class="lstr-qswitcher-results-description"></span>'
+            '<span class="lstr-qswitcher-result-description"></span>'
           );
           qSwitcher.setListText($description, value.description);
           $li.prepend($description);
