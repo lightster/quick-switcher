@@ -2,12 +2,15 @@
   "name": "quick-switcher",
   "version": "0.2.0",
   "scripts": {
-    "build": "r.js -o build.js",
+    "build": "npm run build-js && npm run build-css",
+    "build-js": "r.js -o build.js",
+    "build-css": "node-sass --output-style compressed --include-path src src/quick-switcher.scss dist/quick-switcher.min.css",
     "test": "faucet test/"
   },
   "devDependencies": {
     "almond": "^0.3.3",
     "faucet": "0.0.1",
+    "node-sass": "^4.5.2",
     "requirejs": "^2.3.2",
     "tape": "^4.6.3",
     "text": "requirejs/text"
