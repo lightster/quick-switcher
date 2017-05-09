@@ -2,11 +2,12 @@ define(function() {
   return {
     breadcrumbText: 'Peoplez',
     text: 'people',
+    trackChildrenAs: 'people',
     trackerId: 'People',
     description: {html: '&#128269;'},
     searchCallback: function searchCallback(searchText, resultHandler) {
       setTimeout(function() {
-        resultHandler.setResults(resultHandler.sorters.tracker('person').sort([
+        resultHandler.setResults([
           'lightster',
           'zulu',
           'ollie',
@@ -35,13 +36,12 @@ define(function() {
             text: item,
             trackerId: item,
           };
-        }), searchText));
+        }));
       }, 1);
     },
     searchDelay: 500,
     selectCallback: function selectCallback(selected) {
       console.log(selected.selectedValue);
-      selected.trackAs('person');
     },
   };
 });

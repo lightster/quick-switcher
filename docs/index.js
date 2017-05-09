@@ -15,9 +15,10 @@ define(function(require) {
   }
 
   var qs = lstrQuickSwitcher({
+    trackChildrenAs: 'main',
     searchCallback: function(searchText, basicResultHandler) {
       basicResultHandler.setResults(
-        basicResultHandler.sorters.tracker('main').sort([
+        [
           require('docs/search/people'),
           require('docs/search/colors'),
           require('docs/search/error'),
@@ -27,15 +28,11 @@ define(function(require) {
           },
         ].concat(numbers).filter(function(item) {
           return basicResultHandler.filters.isMatch(searchText, item.text);
-        }), searchText)
+        })
       );
     },
     selectCallback: function(selected) {
-      selected.trackAs('main');
       console.log(selected.selectedValue);
-    },
-    selectChildSearchCallback: function(selected) {
-      selected.trackAs('main');
     },
     searchDelay: 0,
   });

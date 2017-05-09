@@ -46,6 +46,7 @@ var quickSwitcher = function(filters, SelectedResult, sorters, html) {
         selectCallback: options.selectCallback,
         selectChildSearchCallback: options.selectChildSearchCallback,
         searchDelay: options.searchDelay,
+        trackChildrenAs: options.trackChildrenAs,
       });
 
       this.initDomElement($parentDom);
@@ -180,6 +181,10 @@ var quickSwitcher = function(filters, SelectedResult, sorters, html) {
       }
 
       var $ul = $('<ul>');
+
+      if (this.options.trackChildrenAs) {
+        items = sorters.tracker(this.options.trackChildrenAs).sort(items, this.searchText);
+      }
 
       items.forEach(function(value, index) {
         var $li = $('<li>');
@@ -336,10 +341,12 @@ var quickSwitcher = function(filters, SelectedResult, sorters, html) {
 
       var selectedValue = this.valueObjects[index].value;
       var selectedResult = Object.create(SelectedResult);
-      selectedResult.init(selectedValue, this.searchText, event);
+      selectedResult.init(selectedValue, this.searchText, this.options, event);
 
       if (selectedValue.searchCallback) {
-        if (false === this.selectChildSearchCallback(selectedResult)) {
+        var isSelectionAllowed = this.selectChildSearchCallback(selectedResult);
+        selectedResult.track();
+        if (false === isSelectionAllowed) {
           return;
         }
 
@@ -371,7 +378,9 @@ var quickSwitcher = function(filters, SelectedResult, sorters, html) {
         return;
       }
 
-      if (false !== this.selectCallback(selectedResult)) {
+      var isCloseAllowed = this.selectCallback(selectedResult);
+      selectedResult.track();
+      if (false !== isCloseAllowed) {
         this.closeSwitcher();
       }
     },
