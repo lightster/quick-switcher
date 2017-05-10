@@ -27,7 +27,7 @@ define('tracker/selection', ['tracker/statistic'], function(Statistic) {
     increment: function(searchText) {
       this.overall.increment();
 
-      if(!searchText) {
+      if (!searchText) {
         return;
       }
 
