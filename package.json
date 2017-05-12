@@ -2,17 +2,22 @@
   "name": "quick-switcher",
   "version": "0.2.0",
   "scripts": {
-    "build": "npm run build-js && npm run build-css",
-    "build-js": "r.js -o build.js",
-    "build-css": "node-sass --output-style compressed --include-path src src/quick-switcher.scss dist/quick-switcher.min.css",
+    "build": "npm run build:js && npm run build:css",
+    "build:js": "r.js -o build.js",
+    "build:css": "node-sass --output-style compressed --include-path src src/quick-switcher.scss dist/quick-switcher.min.css",
+    "watch": "concurrently 'npm run watch:js' 'npm run watch:css'",
+    "watch:js": "watch 'npm run build:js' src/",
+    "watch:css": "watch 'npm run build:css' src/",
     "test": "faucet test/"
   },
   "devDependencies": {
     "almond": "^0.3.3",
+    "concurrently": "^3.4.0",
     "faucet": "0.0.1",
     "node-sass": "^4.5.2",
     "requirejs": "^2.3.2",
     "tape": "^4.6.3",
-    "text": "requirejs/text"
+    "text": "requirejs/text",
+    "watch": "^1.0.2"
   }
 }
