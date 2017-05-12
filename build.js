@@ -8,6 +8,6 @@
     endFile: '.almond/end.frag',
   },
   paths: {
-    'text': '../node_modules/requirejs-text/text',
+    'text': '../node_modules/text/text',
   },
 });
