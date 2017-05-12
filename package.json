@@ -3,12 +3,16 @@
   "version": "0.2.0",
   "watch": {
     "build:js": {
-      "patterns": ["src"],
+      "patterns": [
+        "src"
+      ],
       "extensions": "js",
       "quiet": false
     },
     "build:css": {
-      "patterns": ["src"],
+      "patterns": [
+        "src"
+      ],
       "extensions": "scss",
       "quiet": false
     }
@@ -29,7 +33,7 @@
     "node-sass": "^4.5.2",
     "requirejs": "^2.3.2",
     "tape": "^4.6.3",
-    "text": "requirejs/text",
+    "text": "github:requirejs/text#2.0.15",
     "npm-watch": "^0.1.9"
   }
 }
