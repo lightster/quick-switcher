@@ -3,16 +3,12 @@
   "version": "0.2.0",
   "watch": {
     "build:js": {
-      "patterns": [
-        "src"
-      ],
+      "patterns": ["src"],
       "extensions": "js",
       "quiet": false
     },
     "build:css": {
-      "patterns": [
-        "src"
-      ],
+      "patterns": ["src"],
       "extensions": "scss",
       "quiet": false
     }
