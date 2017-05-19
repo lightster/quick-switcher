@@ -21,6 +21,11 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
   right: 0;
 }
 
+.lstr-qswitcher-search-container
+{
+  padding: 0 10px 10px 10px;
+}
+
 @media (max-width: 499px) {
   .lstr-qswitcher-container
   {
@@ -31,11 +36,6 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
     left: 0;
     right: 0;
     overflow: hidden;
-  }
-
-  .lstr-qswitcher-search-container
-  {
-    padding: 0 10px 10px 10px;
   }
 
   .lstr-qswitcher-breadcrumb li
@@ -116,11 +116,6 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
     margin: -212px 0 0 -250px;
     left: 50%;
     font-size: .9em;
-  }
-
-  .lstr-qswitcher-search-container
-  {
-    padding: 0 10px 10px 10px;
   }
 
   .lstr-qswitcher-breadcrumb li
