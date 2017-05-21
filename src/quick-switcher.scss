@@ -26,11 +26,36 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
   padding: 0 10px 10px 10px;
 }
 
+.lstr-qswitcher-container
+{
+  display: none;
+  position: fixed;
+}
+
+input.lstr-qswitcher-search
+{
+  width: 100%;
+  border-color: #666666;
+  font-size: 2.5em;
+  line-height: 1.2em;
+  height: auto;
+}
+
+.lstr-qswitcher-results,
+.lstr-qswitcher-no-terms,
+.lstr-qswitcher-no-results,
+.lstr-qswitcher-oops-results
+{
+  margin: 0 10px 10px 10px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  flex-grow: 1;
+}
+
 @media (max-width: 499px) {
   .lstr-qswitcher-container
   {
-    display: none;
-    position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
@@ -43,32 +68,10 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
     margin: 12px;
   }
 
-  input.lstr-qswitcher-search
-  {
-    width: 100%;
-    border-color: #666666;
-    font-size: 2.5em;
-    line-height: 1.2em;
-    height: auto;
-  }
-
   .lstr-qswitcher-help
   {
     display: none;
     margin: 10px 10px 0 0;
-  }
-
-
-  .lstr-qswitcher-results,
-  .lstr-qswitcher-no-terms,
-  .lstr-qswitcher-no-results,
-  .lstr-qswitcher-oops-results
-  {
-    margin: 0 10px 10px 10px;
-    overflow-x: hidden;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    flex-grow: 1;
   }
 
   .lstr-qswitcher-no-terms,
@@ -109,8 +112,6 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
 @media (min-width: 500px)  {
   .lstr-qswitcher-container
   {
-    display: none;
-    position: fixed;
     top: 50%;
     width: 500px;
     margin: -212px 0 0 -250px;
@@ -125,13 +126,8 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
 
   input.lstr-qswitcher-search
   {
-    width: 100%;
-    border-color: #666666;
     padding: 7px;
     margin: 0;
-    font-size: 2.5em;
-    line-height: 1.2em;
-    height: auto;
   }
 
   .lstr-qswitcher-help
@@ -146,12 +142,7 @@ body.lstr-qswitcher-noscroll .lstr-qswitcher-container {
   .lstr-qswitcher-oops-results
   {
     width: 480px;
-    margin: 0 10px 10px 10px;
     max-height: 320px;
-    overflow-x: hidden;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    flex-grow: 1;
   }
 
   .lstr-qswitcher-results li
