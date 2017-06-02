@@ -19,5 +19,6 @@ deploy:
   # file: quick-switcher.tar.gz
   script: ls -l quick-switcher.tar.gz
   skip_cleanup: true
-  # on:
-  #   tags: true
+  on:
+    all_branches: true
+    # tags: true
