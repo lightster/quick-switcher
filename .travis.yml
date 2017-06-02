@@ -10,7 +10,9 @@ cache:
     - node_modules
 before_deploy:
   - yarn build
-  - cd dist && tar czf quick-switcher.tar.gz quick-switcher.min.*
+  - cd dist
+  - tar czf quick-switcher.tar.gz quick-switcher.min.*
+  - cd -
 deploy:
   # provider: releases
   provider: script
