@@ -10,14 +10,14 @@ cache:
     - node_modules
 before_deploy:
   - yarn build
-  - tar czf -f quick-switcher.tar.gz -C dist quick-switcher.min.*
+  - cd dist && tar czf -f quick-switcher.tar.gz quick-switcher.min.*
 deploy:
   # provider: releases
   provider: script
   api_key:
     secure: foe7OM4D0ZSrQavHqT7FT9FrzQjDg33xSwqPyC6roqD34XJy9qmmaoG5pOHUO8NtNuhNCrt8eBeVvE3IpA2XcAML8rgFCGvrrbMtYTAaR+va041SFjQr8dGWtB9xyK5ZgXp1yZeFPMijb9bd8xKbcfjFlZDjlPMzUoMJzwQHKZpAZeUuJCBVGD06lmGz9YOI5I/qB08L/P6ewUrg26KAH1oUECu2WPKTDcih6k4OFvH2/9OWZPRP3TvelgRGIbstLWUPEISiL9nYEWhGD80eqIP1+2JM1aNXrgVmYUBPtXrDiC9jqiT2qEx47H7sWHx046HrmPcKZTCfD3foE2gs/KxBtJBKcgQBqhFjHf4HJ4ubvnsyDdt5A67FPOk8fJ+Sgqy+P9FSZB6Hzwz/lqtlplCiFj2HPu6kBZAoTtnZB3HYcp9G2OHwWjp7QycjppWlzDUOAkmlhu6EgUPO4FehbJ9mEf4wnvTlkTwd40vv4kWR6d3TohjXS7Oexj0g3dJpHykL+RDKe1EEAPeaYTmPy9OnBlcrWuGT9QCRmx+O+ZBaZSKdr5KvQAMYVBl2VSAWAnbrRqjvXEExQQpW042eniG7iTNNwdVG3wrIn8k9AC0wzOx5kYXlhB/12kdOxl+uOP8kwcu3v9FHnVj03d3HdJ5eeG1rRc3mcjg4v8HEFyY=
-  # file: quick-switcher.tar.gz
-  script: ls -l quick-switcher.tar.gz
+  # file: dist/quick-switcher.tar.gz
+  script: ls -l dist/quick-switcher.tar.gz
   skip_cleanup: true
   on:
     all_branches: true
