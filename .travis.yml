@@ -12,7 +12,7 @@ before_deploy:
   - yarn build
   - cp README.md LICENSE dist/
   - cd dist
-  - tar czf quick-switcher.tar.gz quick-switcher.min.*
+  - tar czf quick-switcher.tar.gz quick-switcher.min.* README.md LICENSE
   - cd -
 deploy:
   provider: releases
