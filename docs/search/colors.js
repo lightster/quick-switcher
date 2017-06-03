@@ -147,7 +147,10 @@ define(['docs/search/colors'], function(lstrQuickSwitcher) {
         );
       }).map(function(item) {
         item.html = item.name;
-        item.description = {'html': '<div style="height: 11px; width: 11px; background-color: #' + item.hex + '; "></div>'};
+        item.description = {
+          'html': '<div style="height: 11px; width: 11px; background-color: #'
+            + item.hex + '; "></div>',
+        };
         return item;
       }));
     },

@@ -90,12 +90,10 @@ var quickSwitcher = function(filters, SelectedResult, sorters, html) {
       });
       $('html').on('keydown', '.lstr-qswitcher-noscroll', function(event) {
         if (event.which === 38) { // up arrow key
-          qSwitcher.selectIndex(qSwitcher.selectedIndex - 1);
-          qSwitcher.scrollToSelectedItem();
+          qSwitcher.adjustSelectedIndex(-1);
           event.preventDefault();
         } else if (event.which === 40) { // down arrow key
-          qSwitcher.selectIndex(qSwitcher.selectedIndex + 1);
-          qSwitcher.scrollToSelectedItem();
+          qSwitcher.adjustSelectedIndex(1);
           event.preventDefault();
         } else if (event.which === 27) { // escape key
           qSwitcher.toggleSwitcher();
@@ -183,7 +181,8 @@ var quickSwitcher = function(filters, SelectedResult, sorters, html) {
       var $ul = $('<ul>');
 
       if (this.options.trackChildrenAs) {
-        items = sorters.tracker(this.options.trackChildrenAs).sort(items, this.searchText);
+        var tracker = sorters.tracker(this.options.trackChildrenAs);
+        items = tracker.sort(items, this.searchText);
       }
 
       items.forEach(function(value, index) {
@@ -309,6 +308,11 @@ var quickSwitcher = function(filters, SelectedResult, sorters, html) {
       if (bottomOfLi > scrollBottom || topOfLi < scrollTop) {
         $results.scrollTop(topOfLi);
       }
+    },
+
+    adjustSelectedIndex: function(adjustment) {
+      this.selectIndex(this.selectedIndex + adjustment);
+      this.scrollToSelectedItem();
     },
 
     toggleSwitcher: function() {

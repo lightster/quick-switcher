@@ -1,4 +1,13 @@
 define('tracker', ['tracker/selection'], function(Selection) {
+  var compareLowerFirst = function(a, b) {
+    if (a != b) {
+      return a < b ? -1 : 1;
+    }
+  };
+  var compareGreaterFirst = function(a, b) {
+    return compareLowerFirst(b, a);
+  };
+
   return {
     init: function(trackerName) {
       this.name = trackerName;
@@ -51,15 +60,9 @@ define('tracker', ['tracker/selection'], function(Selection) {
       });
 
       items.sort(function(a, b) {
-        if (a._qswitcher.sort != b._qswitcher.sort) {
-          return a._qswitcher.sort < b._qswitcher.sort ? -1 : 1;
-        }
-
-        if (a._qswitcher.score == b._qswitcher.score) {
-          return a._qswitcher.index < b._qswitcher.index ? -1 : 1;
-        }
-
-        return a._qswitcher.score > b._qswitcher.score ? -1 : 1;
+        return compareLowerFirst(a._qswitcher.sort, b._qswitcher.sort)
+          || compareGreaterFirst(a._qswitcher.score, b._qswitcher.score)
+          || compareLowerFirst(a._qswitcher.index, b._qswitcher.index);
       });
 
       items.forEach(function(item) {
