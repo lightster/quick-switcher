@@ -181,7 +181,8 @@ var quickSwitcher = function(filters, SelectedResult, sorters, html) {
       var $ul = $('<ul>');
 
       if (this.options.trackChildrenAs) {
-        items = sorters.tracker(this.options.trackChildrenAs).sort(items, this.searchText);
+        var tracker = sorters.tracker(this.options.trackChildrenAs);
+        items = tracker.sort(items, this.searchText);
       }
 
       items.forEach(function(value, index) {
