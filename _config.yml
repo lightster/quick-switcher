@@ -1,0 +1,14 @@
+sass:
+  sass_dir: .
+
+exclude:
+  - build.js
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE*
+  - Makefile
+  - node_modules
+  - package.json
+  - README.md
+  - vendor
+  - yarn.lock
