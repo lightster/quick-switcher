@@ -1,5 +1,10 @@
 # Change Log
 
+## v0.4.0
+
+ - Update docs to use Jekyll for SCSS compiling
+ - Remove `dist` directory
+
 ## v0.3.0
 
 Backwards breaking changes and steps for migrating to v0.3.0:
