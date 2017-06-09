@@ -4,6 +4,7 @@
 
  - Update docs to use Jekyll for SCSS compiling
  - Remove `dist` directory
+ - Allow hot key to be disabled by allowing the hot key to be set to null
 
 ## v0.3.0
 
