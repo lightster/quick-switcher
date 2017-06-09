@@ -39,7 +39,9 @@ var quickSwitcher = function(filters, SelectedResult, sorters, html) {
         hotKey: 'K',
       }, options);
 
-      this.hotKey = options.hotKey.toUpperCase();
+      if (options.hotKey) {
+        this.hotKey = options.hotKey.toUpperCase();
+      }
 
       this.setOptions({
         searchCallback: options.searchCallback,
