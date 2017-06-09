@@ -1,3 +1,5 @@
+baseurl: "/quick-switcher"
+
 sass:
   sass_dir: .
 
