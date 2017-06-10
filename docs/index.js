@@ -38,4 +38,10 @@ define(function(require) {
   });
 
   $('#open-qswitcher').on('click', qs.open.bind(qs));
+
+  var modifierKey = 'Ctrl';
+  if (navigator.platform.toLowerCase().indexOf('mac') != -1) {
+    modifierKey = 'Cmd';
+  }
+  $('.qs-hotkey').text(modifierKey + '+K');
 });
