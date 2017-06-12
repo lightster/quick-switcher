@@ -37,10 +37,12 @@ define(function(require) {
     searchDelay: 0,
   });
 
-  $('#open-qswitcher').on('click', qs.open.bind(qs));
+  $('.open-qswitcher').on('click', qs.open.bind(qs));
 
   var modifierKey = 'Ctrl';
-  if (navigator.platform.toLowerCase().indexOf('mac') != -1) {
+  if (navigator.platform.toLowerCase().indexOf('mac') != -1
+    || navigator.platform.indexOf('iP') != -1
+  ) {
     modifierKey = 'Cmd';
   }
   $('.qs-hotkey').text(modifierKey + '+K');
