@@ -12,6 +12,7 @@ var quickSwitcher = function(filters, SelectedResult, sorters, html) {
 
   var QuickSwitcher = {
     init: function($parentDom, options) {
+      this.isOpen = false;
       this.$parentDom = null;
       this.$liCollection = null;
       this.valueObjects = null;
@@ -91,6 +92,10 @@ var quickSwitcher = function(filters, SelectedResult, sorters, html) {
         }
       });
       $('html').on('keydown', '.lstr-qswitcher-noscroll', function(event) {
+        if (!qSwitcher.isOpen) {
+          return;
+        }
+
         if (event.which === 38) { // up arrow key
           qSwitcher.adjustSelectedIndex(-1);
           event.preventDefault();
@@ -98,7 +103,7 @@ var quickSwitcher = function(filters, SelectedResult, sorters, html) {
           qSwitcher.adjustSelectedIndex(1);
           event.preventDefault();
         } else if (event.which === 27) { // escape key
-          qSwitcher.toggleSwitcher();
+          qSwitcher.closeSwitcher();
           event.preventDefault();
         } else if (13 === event.keyCode) {
           qSwitcher.triggerSelect(qSwitcher.selectedIndex, event);
@@ -318,7 +323,7 @@ var quickSwitcher = function(filters, SelectedResult, sorters, html) {
     },
 
     toggleSwitcher: function() {
-      if (this.$parentDom.hasClass('lstr-qswitcher-noscroll')) {
+      if (this.isOpen) {
         this.closeSwitcher();
         return;
       }
@@ -333,11 +338,15 @@ var quickSwitcher = function(filters, SelectedResult, sorters, html) {
       this.renderList();
 
       this.$parentDom.toggleClass('lstr-qswitcher-noscroll');
+      this.$domElement.show();
+      this.isOpen = true;
       this.$search.focus();
     },
 
     closeSwitcher: function() {
       this.$parentDom.removeClass('lstr-qswitcher-noscroll');
+      this.$domElement.hide();
+      this.isOpen = false;
     },
 
     triggerSelect: function(index, event) {
