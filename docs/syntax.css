@@ -207,6 +207,7 @@
 .highlight {
   background-color: #f8f8f8;
   padding: 10px;
+  overflow-x: auto;
 }
 .highlight .code pre {
   padding-left: 10px;
