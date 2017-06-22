@@ -14,6 +14,8 @@ define(function(require) {
     numbers.push({text: i + '', description: 'Number'});
   }
 
+  require('docs/examples/simple');
+
   var qs = lstrQuickSwitcher({
     trackChildrenAs: 'main',
     searchCallback: function(searchText, basicResultHandler) {

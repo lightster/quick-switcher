@@ -18,24 +18,33 @@ layout: home
 
 ## Simple Usage
 
-```javascript
-var qs = lstrQuickSwitcher({
-  searchCallback: function(searchText, resultHandler) {
-    var options = [
-      'Zach',
-      'Stacy',
-      'Matt',
-      'Lightster',
-      'Baxter',
-    ];
-    var filteredOptions = options.filter(function(item) {
-      return resultHandler.filters.isMatch(searchText, item);
-    });
+```html
+<script type="text/javascript">
+  var qs = lstrQuickSwitcher({
+    searchCallback: function(searchText, resultHandler) {
+      var options = [
+        'Zach',
+        'Stacy',
+        'Matt',
+        'Lightster',
+        'Baxter',
+      ];
+      var filteredOptions = options.filter(function(item) {
+        return resultHandler.filters.isMatch(searchText, item);
+      });
 
-    resultHandler.setResults(filteredOptions);
-  },
-  selectCallback: function(selected) {
-    console.log(selected.selectedValue);
-  },
-});
+      resultHandler.setResults(filteredOptions);
+    },
+    selectCallback: function(selected) {
+      console.log(selected.selectedValue);
+    },
+    hotKey: null
+  });
+
+  $('#example-simple').on('click', qs.open.bind(simpleQs));
+</script>
+
+<button class="btn btn-outline-primary" id="example-simple">Open Quick Switcher</button>
 ```
+
+<button class="btn btn-outline-primary" id="example-simple">Open Quick Switcher</button>
