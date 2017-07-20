@@ -383,11 +383,14 @@ var quickSwitcher = function(filters, SelectedResult, sorters, html) {
             = selectedValue.selectChildSearchCallback;
         }
 
+        if (!selectedResult.isSearchTextClearingPrevented()) {
+          this.$search.val('');
+          this.searchText = '';
+        }
+
         this.valueObjects = [];
         this.selectIndex(null);
-        this.$search.val('');
         this.$search.focus();
-        this.searchText = '';
         this.renderList();
 
         return;
