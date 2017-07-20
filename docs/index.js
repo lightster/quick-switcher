@@ -19,22 +19,36 @@ define(function(require) {
   var qs = lstrQuickSwitcher({
     trackChildrenAs: 'main',
     searchCallback: function(searchText, basicResultHandler) {
-      basicResultHandler.setResults(
-        [
-          require('docs/search/people'),
-          require('docs/search/colors'),
-          require('docs/search/error'),
-          {
-            text: 'Quickest Item',
-            trackerId: 'Quickest Item',
-          },
-        ].concat(numbers).filter(function(item) {
-          return basicResultHandler.filters.isMatch(searchText, item.text);
-        })
-      );
+      var colors = require('docs/search/colors');
+      var colorShortcut = Object.create(colors);
+      colorShortcut.text = "Search for color '" + searchText + "'";
+      colorShortcut.isShortcut = true;
+
+      var results = [
+        require('docs/search/people'),
+        colors,
+        require('docs/search/error'),
+        {
+          text: 'Quickest Item',
+          trackerId: 'Quickest Item',
+        },
+      ].concat(numbers).filter(function(item) {
+        return basicResultHandler.filters.isMatch(searchText, item.text);
+      });
+
+      if (searchText) {
+        results.push(colorShortcut);
+      }
+
+      basicResultHandler.setResults(results);
     },
     selectCallback: function(selected) {
       console.log(selected.selectedValue);
+    },
+    selectChildSearchCallback: function(selected) {
+      if (selected.selectedValue.isShortcut) {
+        selected.preventSearchTextClearing();
+      }
     },
     searchDelay: 0,
   });

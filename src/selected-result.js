@@ -6,6 +6,7 @@ define('selected-result', ['factories'], function(factories) {
       this.parent = parent;
       this.domEvent = domEvent;
       this.trackingPrevented = false;
+      this.searchTextClearingPrevented = false;
     },
 
     preventTracking: function() {
@@ -21,6 +22,14 @@ define('selected-result', ['factories'], function(factories) {
         this.selectedValue,
         this.searchText
       );
+    },
+
+    preventSearchTextClearing: function preventSearchTextClearing() {
+      this.searchTextClearingPrevented = true;
+    },
+
+    isSearchTextClearingPrevented: function shouldClearSearchText() {
+      return this.searchTextClearingPrevented;
     },
   };
 });
