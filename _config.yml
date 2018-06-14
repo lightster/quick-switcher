@@ -1,15 +1,15 @@
-baseurl: "/quick-switcher"
+remote_theme: lightster/jekyll-theme-scrawl@v0.1.19
 
-kramdown:
-  syntax_highlighter_opts:
-    block:
-      line_numbers: true
+title: Quick Switcher
 
 sass:
   sass_dir: .
+  style: compressed
 
 exclude:
   - build.js
+  - changelog.md
+  - docker-compose.yml
   - Gemfile
   - Gemfile.lock
   - LICENSE*
@@ -19,3 +19,20 @@ exclude:
   - README.md
   - vendor
   - yarn.lock
+
+
+plugins:
+  # force included by GitHub Pages
+  - jekyll-coffeescript
+  - jekyll-gist
+  - jekyll-github-metadata
+  - jekyll-paginate
+  - jekyll-relative-links
+  - jekyll-optional-front-matter
+  - jekyll-readme-index
+  - jekyll-default-layout
+  - jekyll-titles-from-headings
+  # required by {% seo %} tag
+  - jekyll-seo-tag
+
+permalink: pretty
