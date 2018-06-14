@@ -1,5 +1,5 @@
 ---
-layout: home
+layout: base
 ---
 
 <div class="jumbotron">
