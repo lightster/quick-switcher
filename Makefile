@@ -1,9 +1,10 @@
-install:;
-	sudo gem install bundler
-	bundle install
+install: init
 
-run:;
-	bundle exec jekyll serve
+.PHONY: test
 
-build:;
-	bundle exec jekyll build
+init:
+	docker-compose up -d
+	docker-compose run --rm node yarn install --no-save
+
+test:
+	docker-compose run --rm node npm run test
