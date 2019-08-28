@@ -3,12 +3,16 @@
   "version": "0.3.0",
   "watch": {
     "build:js": {
-      "patterns": ["src"],
+      "patterns": [
+        "src"
+      ],
       "extensions": "js",
       "quiet": false
     },
     "build:css": {
-      "patterns": ["src"],
+      "patterns": [
+        "src"
+      ],
       "extensions": "scss",
       "quiet": false
     }
@@ -26,10 +30,10 @@
     "almond": "^0.3.3",
     "concurrently": "^3.4.0",
     "faucet": "0.0.1",
-    "node-sass": "^4.5.2",
+    "node-sass": "^4.12.0",
+    "npm-watch": "^0.1.9",
     "requirejs": "^2.3.2",
     "tape": "^4.6.3",
-    "text": "github:requirejs/text#2.0.15",
-    "npm-watch": "^0.1.9"
+    "text": "github:requirejs/text#2.0.15"
   }
 }
